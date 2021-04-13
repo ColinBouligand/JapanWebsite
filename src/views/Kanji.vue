@@ -2,7 +2,7 @@
 <div v-if="showAddTask"> <AddTask @add-task="addTask" /></div>
     <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
 
-<Header @toggle-add-task="toggleAddTask" title="Dessine moi ça bien" :showAddTask="showAddTask"/>
+<Header @toggle-add-task="toggleAddTask" title="Découvrez quel kanji vous avez dessiné" :showAddTask="showAddTask"/>
 
 <div id="canvas-container">
     <Canvas />
@@ -106,7 +106,6 @@ export default {
     }
 
     #canvas-container {
-        position: relative;
-        margin-left: 10%;
+
     }
 </style>
