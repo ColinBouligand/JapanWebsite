@@ -1,5 +1,8 @@
 <template>
-    <nav> <a><img src="../assets/logo.png" alt="logo Site" ></a>    <a><span>Kanjos</span></a>      <a><span>Atelier Dessin</span></a>       <a><span>Flash Cards</span></a>
+    <nav>
+      <a><router-link to="/Home"><img src="../assets/logo.png" alt="logo Site" ></router-link></a>  
+      <a><router-link to="/Kanji"><span>Atelier Dessin</span></router-link></a>    
+      <a><router-link to="/FlashCards"><span>FlashCards</span></router-link></a>
     </nav>
 </template>
 
@@ -16,6 +19,14 @@ a {
     margin-right: 3%;
  
 }
+/* Supprime la barre sous les liens */
+a:link { text-decoration: none; }
+
+a:visited { text-decoration: none; }
+
+a:hover { text-decoration: none; }
+
+a:active { text-decoration: none; }
 
 span:hover {
           color: #ea4f4c;

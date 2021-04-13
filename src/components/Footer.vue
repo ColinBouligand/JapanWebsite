@@ -3,7 +3,7 @@
         <p>
             Copyright &copy; 2021
         </p>
-        <router-link to="/about">About</router-link>
+        <router-link to="/About">About</router-link>
 
     </footer>
 </template>

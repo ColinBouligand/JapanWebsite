@@ -1,6 +1,8 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import About from '../views/About'
+import FlashCards from '../views/FlashCards'
 import Home from '../views/Home'
+import Kanji from '../views/Kanji'
+import About from '../views/About'
 
 
 const routes = [
@@ -8,6 +10,21 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home
+    },
+    {
+        path: '/Home',
+        name: 'Home',
+        component: About
+    },
+    {
+        path: '/flashcards',
+        name: 'FlashCards',
+        component: FlashCards
+    },
+    {
+        path: '/kanji',
+        name: 'Kanji',
+        component: Kanji
     },
     {
         path: '/about',

@@ -1,8 +1,7 @@
 <template>
 <Navbar />
 <div class="container">
-<Header @toggle-add-task="toggleAddTask" title="Task Tracker" :showAddTask="showAddTask"/>
-<Canvas />
+
 
 <router-view :showAddTask="showAddTask"></router-view>
 <Footer />
@@ -14,11 +13,10 @@
 <script>
 import Navbar from './components/Navbar'
 
-import Header from './components/header'
-
-import Canvas from './components/Canvas'
 
 import Footer from './components/Footer'
+
+
 
 
 
@@ -26,8 +24,6 @@ export default {
   name: 'App',
   components: {
     Navbar,
-    Header,
-    Canvas,
     Footer
   },
   data() {
