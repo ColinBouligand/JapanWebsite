@@ -1,12 +1,14 @@
 <template>
-<div v-if="showAddTask"> <AddTask @add-task="addTask" /></div>
-    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" />
+<div v-if="showAddTask"> <AddTask  /></div>
+    <!--<Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" /> -->
 
-<Header @toggle-add-task="toggleAddTask" title="Découvrez quel kanji vous avez dessiné" :showAddTask="showAddTask"/>
+<Header @toggle-add-task="toggleAddTask" title="Atelier Dessin" :showAddTask="showAddTask"/>
 
 <div id="canvas-container">
-    <Canvas />
+    <Canvas @add-drawing="addDrawing"/>
 </div>
+
+<Drawings :drawings="drawings"/>
  
 
 
@@ -14,7 +16,7 @@
 
 <script>
 
-import Tasks from '../components/Tasks'
+import Drawings from '../components/Drawings'
 import AddTask from '../components/AddTask'
 
 import Header from '../components/header'
@@ -28,29 +30,30 @@ export default {
         showAddTask: Boolean,
     },
     components: {
-        Tasks,
+        Drawings,
         AddTask,
         Header,
         Canvas
     },
     data() {
         return {
-        tasks: [],
+        drawings: [],
         }
     },
      methods: {
-      async addTask(task){
-        const res = await fetch('http://localhost:8080/tasks', {
+      async addDrawing(drawing){
+        console.log(drawing)
+        const res = await fetch('http://localhost:5000/drawings', {
           method: 'POST',
           headers: {
               'Content-type': 'application/json',
           },
-          body: JSON.stringify(task)
+          body: JSON.stringify(drawing)
 
         })
         const data = await res.json()
 
-        this.tasks = [...this.tasks, data]
+        this.drawings = [...this.drawings, data]
       },
       async deleteTask(id){
         if(confirm('Are you sure ?')){
@@ -77,8 +80,8 @@ export default {
         this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: data.reminder} : task)
 
       },
-      async fetchTasks(){
-        const res = await fetch('http://localhost:8080/tasks')
+      async fetchDrawings(){
+        const res = await fetch('http://localhost:5000/drawings')
         const data = await res.json()
         return data
       },
@@ -91,7 +94,7 @@ export default {
 
   },
   async created() {
-    this.tasks = await this.fetchTasks()
+    this.drawings = await this.fetchDrawings()
   }
 }
 

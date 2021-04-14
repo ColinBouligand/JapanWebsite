@@ -40,8 +40,8 @@ export default{
         // get canvas 2D context and set him correct size
         this.ctx = this.canvas.getContext('2d');
 
-        var canvas = this.canvas
-        var ctx= this.ctx
+        const canvas = this.canvas
+        const ctx= this.ctx
 
         // last known position
         var pos = { x: 0, y: 0 };
@@ -52,8 +52,10 @@ export default{
 
         // new position from mouse event
         function setPosition(e) {
-            pos.x = e.clientX - canvas.getBoundingClientRect().x
-            pos.y = e.clientY - canvas.getBoundingClientRect().y
+            pos.x = e.clientX - canvas.offsetLeft
+            pos.y = e.clientY - canvas.offsetTop
+                        
+
         } // pour le décalage de position du au nav et header
 
         function draw(e) {
@@ -80,12 +82,21 @@ export default{
         },
         saveDraw() {
              this.imgUrl= this.canvas.toDataURL( ) ; // This method saves graphics in png
-            console.log(this.imgUrl)
+            //console.log(this.imgUrl)
             var image = this.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            //console.log(image)
             var link = document.createElement('a');
-            link.download = "my-image.png";
+            link.download = "kanji.png";
             link.href = image;
             link.click();
+
+            //persistence données
+            const newDrawing = {
+                       imgUrl: this.imgUrl
+
+                }
+
+                this.$emit('add-drawing', newDrawing)
             //envoyer sous le format image:dataURL
             //document.getElementById('cimg').src = imgurl; // This will set img src to dataurl(png) so that it can be saved as image.
         }
@@ -102,6 +113,7 @@ export default{
      background-color: white;
      width:30%;
      height:30%;
+     position:relative;
  }
 
  Button {
