@@ -109,6 +109,12 @@ export default {
     }
 
     #canvas-container {
+      display:flex;
+      flex-direction: column;
+      width:50%;
+      position:relative;
+      margin-left:25%;
+      align-items:center;
 
     }
 </style>

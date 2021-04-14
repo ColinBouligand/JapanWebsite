@@ -1,12 +1,8 @@
 <template>
-        <Button @click="saveDraw()" text="Sauvegarder" color="green"/>
-    <Button @click="eraseDraw()" text="Réinitialiser" color="blue"/>
+
     <canvas id="canvas"></canvas>
-
-    
-
-    
-
+    <Button @click="eraseDraw()" text="Réinitialiser" color="blue"/>
+    <Button @click="saveDraw()" text="Sauvegarder" color="green"/>
 
 </template>
 
@@ -28,10 +24,11 @@ export default{
         }
     },
     mounted(){
+        /** Gestion du dessin de l'utilisateur **/
         this.canvas = document.getElementById('canvas')
         // some hotfixes... ( ≖_≖)
         document.body.style.margin = 0;
-        this.canvas.style.position = 'fixed';
+        this.canvas.style.position = 'relative';
         this.canvas.style.border ='solid black 1px';
         //canvas.style.width='300px';
         //canvas.style.height='300px';
@@ -52,10 +49,11 @@ export default{
 
         // new position from mouse event
         function setPosition(e) {
-            pos.x = e.clientX - canvas.offsetLeft
-            pos.y = e.clientY - canvas.offsetTop
-                        
+            //console.log(canvas.getBoundingClientRect().x + canvas.width,  canvas.getBoundingClientRect().y + canvas.height)
+           // console.log(e.clientX - canvas.getBoundingClientRect().x,e.clientY - canvas.getBoundingClientRect().y)
 
+            pos.x = e.clientX - canvas.getBoundingClientRect().x
+            pos.y = e.clientY - canvas.getBoundingClientRect().y
         } // pour le décalage de position du au nav et header
 
         function draw(e) {
@@ -68,7 +66,7 @@ export default{
             ctx.lineCap = 'round';
             ctx.strokeStyle = 'black';
 
-            ctx.moveTo(pos.x , pos.y); // from
+            ctx.moveTo(pos.x, pos.y); // from
             setPosition(e);
             ctx.lineTo(pos.x, pos.y); // to
 
@@ -77,9 +75,11 @@ export default{
     
     },
      methods:{
+         //Clic sur réinitialiser -> nettoie le canvas
          eraseDraw() {
                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);           
         },
+        //Clic sur sauvegarder -> propose de télécharger l'image et l'enregistre dans la base
         saveDraw() {
              this.imgUrl= this.canvas.toDataURL( ) ; // This method saves graphics in png
             //console.log(this.imgUrl)
@@ -109,14 +109,18 @@ export default{
 
 
  canvas {
+
      border: solid black 2px;
      background-color: white;
-     width:30%;
-     height:30%;
+     width:65%;
+     height:60%;
      position:relative;
+     cursor:
  }
 
  Button {
+    width:50%;
+
  }
 
 </style>

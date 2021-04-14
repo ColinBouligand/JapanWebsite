@@ -1,5 +1,4 @@
 <template>
-
     <div :key="drawing.id" v-for="drawing in drawings">
     <Drawing  :drawing="drawing"/>
     </div>

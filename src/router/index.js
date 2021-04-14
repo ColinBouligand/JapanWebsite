@@ -14,7 +14,7 @@ const routes = [
     {
         path: '/Home',
         name: 'Home',
-        component: About
+        component: Home
     },
     {
         path: '/flashcards',

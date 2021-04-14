@@ -39,4 +39,7 @@ header {
     align-items: center ;
     margin-bottom: 20px ;
 }
+h1 {
+    margin-left: 37%;
+}
 </style>
