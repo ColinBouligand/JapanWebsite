@@ -115,7 +115,6 @@ export default{
      width:65%;
      height:60%;
      position:relative;
-     cursor:
  }
 
  Button {

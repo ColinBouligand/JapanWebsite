@@ -1,5 +1,5 @@
 <template>
-    {{kanji}}
+   <p v-bind:class="{verso : clicked}" @click="turnCard"> {{kanji}} </p>
 </template>
 
 <script>
@@ -9,6 +9,17 @@ export default {
     props: {
         kanji: String,
     },
+    data() {
+        return {
+                clicked: false
+        }
+    },
+    methods: {
+        turnCard(){
+            this.clicked = !this.clicked;
+        }
+
+    }
 }
 
 
@@ -16,15 +27,8 @@ export default {
 
 
 <style scoped>
-
-template {
-    text-align: center;
-     border: solid white 1px;
-     background-color: black;
-     color:white;
-     padding:0;
-     width:10%;
-     margin-left:45%;
-     margin-bottom: 1%;
+ .verso {
+    color:black;
  }
+
 </style>

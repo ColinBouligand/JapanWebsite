@@ -1,6 +1,6 @@
 <template>
     <div id="cards">
-    <div class="card" :key="kanji.id" v-for="kanji in kanjis">
+    <div class="card" :key="kanji.id" v-for="kanji in kanjis" >
     <Card  :kanji="kanji"/>
     </div>
     </div>
@@ -17,6 +17,7 @@
         components: {
             Card,
         },
+        
     }
 </script>
 
@@ -35,5 +36,7 @@
      padding:0;
      width:10%;
      margin-bottom: 1%;
+     cursor:pointer;
 }
+
 </style>
