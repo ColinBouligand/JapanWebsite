@@ -24,18 +24,21 @@
 <style scoped>
 #cards {
     display:flex;
+    flex-direction: column;
     flex-wrap:wrap;
     justify-content: space-around;
 }
 
 .card {
-    text-align: center;
+     font-size: 110px;
+     text-align: center;
      border: solid white 1px;
      background-color: black;
      color:white;
      padding:0;
-     width:10%;
-     margin-bottom: 1%;
+     width:8%;
+     margin-left:10%; 
+     margin-top: 1%;
      cursor:pointer;
 }
 

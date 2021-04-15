@@ -5,6 +5,7 @@
 <Header @toggle-add-task="toggleAddTask" title="Atelier Dessin" :showAddTask="showAddTask"/>
 
 <div id="canvas-container">
+  
     <Canvas @add-drawing="addDrawing"/>
 </div>
 
@@ -55,7 +56,7 @@ export default {
 
         this.drawings = [...this.drawings, data]
       },
-      async deleteTask(id){
+      /*async deleteTask(id){
         if(confirm('Are you sure ?')){
           const res = await fetch(`http://localhost:8080/tasks/${id}`, {
           method: 'DELETE'
@@ -79,18 +80,12 @@ export default {
         const data =  await res.json()
         this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: data.reminder} : task)
 
-      },
+      },*/
       async fetchDrawings(){
         const res = await fetch('http://localhost:5000/drawings')
         const data = await res.json()
         return data
-      },
-      async fetchTask(id){
-        //http://localhost:8080  -> avant api
-        const res = await fetch(`http://localhost:8080/tasks/${id}`)
-        const data = await res.json()
-        return data
-      },
+      }
 
   },
   async created() {

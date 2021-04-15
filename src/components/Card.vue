@@ -27,6 +27,8 @@ export default {
 
 
 <style scoped>
+
+
  .verso {
     color:black;
  }
