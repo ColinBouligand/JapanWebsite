@@ -22,3 +22,17 @@ export default{
 }
 
 </script>
+
+<style scoped>
+
+.btn {
+  display: inline-block;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 15px;
+  font-family: inherit;
+}
+</style>

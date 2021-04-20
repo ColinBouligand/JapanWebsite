@@ -129,6 +129,7 @@ export default{
 
  Button {
     width:50%;
+    margin:5px;
 
  }
 

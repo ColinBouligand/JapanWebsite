@@ -1,13 +1,13 @@
 <template>
     <div id="cards">
     <div class="card" :key="kanji.id" v-for="kanji in kanjis" >
-    <Card  :kanji="kanji"/>
+        <FlashCard  :kanji="kanji"/>
     </div>
     </div>
 </template>
 
 <script >
-    import Card from './Card'
+    import FlashCard from './FlashCard'
 
     export default {
         name: 'Cards',
@@ -15,7 +15,7 @@
             kanjis: Array,
         },
         components: {
-            Card,
+            FlashCard,
         },
         
     }
@@ -30,16 +30,18 @@
 }
 
 .card {
+
      font-size: 110px;
      text-align: center;
      border: solid white 1px;
      background-color: black;
      color:white;
      padding:0;
-     width:8%;
+     width:10%;
      margin-left:10%; 
-     margin-top: 1%;
+     margin-top: 10%;
      cursor:pointer;
 }
+
 
 </style>

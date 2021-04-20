@@ -14,7 +14,9 @@ a {
 }
 
 footer {
-    margin-top : 30px;
+    margin-bottom : 5%;
+    margin-left:45%;
     text-align: center;
+    position:absolute;
 }
 </style>

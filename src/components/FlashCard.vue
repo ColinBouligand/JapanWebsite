@@ -2,7 +2,7 @@
 <div class="content">
     <div class="front">{{kanji.kanji}}</div>
     <div class="back" >
-      <p>{{format(kanji.meanings)}}</p>
+      <p>{{JSON.stringify(kanji.meanings)}}</p>
        </div>
 </div>
    <!--<p v-bind:class="{verso : clicked}" @click="turnCard">  </p> --> 
@@ -12,7 +12,7 @@
 
 
 export default {
-    name: 'Card',
+    name: 'FlashCard',
     props: {
         kanji: Object
     },
@@ -21,21 +21,11 @@ export default {
     data() {
         return {
                // clicked: false
-        }
-    },
-    methods: {
-        format(value) { //met en forme le json en chaine
-          var res=""
-          for(var i in value)
-          {
-              res+= value[i] + " - "
-          }
-          console.log(res)
-          return res.substring(0, res.length - 2); // enlève le dernier tiret
+              // meanings: ""
         }
     },
     async created(){
-        //console.log(this.kanji.meanings)
+        console.log(this.kanji.meanings)
         //console.log(this.kanji.meanings)
         //this.meanings= JSON.stringify(this.kanji.meanings)
         //console.log(this.meanings)
@@ -53,8 +43,8 @@ export default {
 
 .content {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  width: 10%;
+  height: 10%;
   box-shadow: 0 0 15px rgba(0,0,0,0.1);
 
   transition: transform 1s;
@@ -72,7 +62,7 @@ export default {
   height: 100%;
   width: 100%;
   background: #FAF0CD;
-  line-height: 300px;
+  line-height: 100px;
   color: #DB5249;
   text-align: center;
   font-size: 60px;

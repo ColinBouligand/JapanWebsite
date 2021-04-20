@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import FlashCards from '../views/FlashCards'
+import MemoryCard from '../views/MemoryCard'
 import Home from '../views/Home'
 import Kanji from '../views/Kanji'
 import About from '../views/About'
@@ -20,6 +21,11 @@ const routes = [
         path: '/flashcards',
         name: 'FlashCards',
         component: FlashCards
+    },
+    {
+        path: '/memorycard',
+        name: 'MemoryCard',
+        component: MemoryCard
     },
     {
         path: '/kanji',

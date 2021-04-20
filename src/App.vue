@@ -4,7 +4,7 @@
 
 
 <router-view ></router-view>
-<Footer />
+<!--<Footer />-->
 
 </div>
 
@@ -12,14 +12,14 @@
 
 <script>
 import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+//import Footer from './components/Footer'
 
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    Footer
+   // Footer
   },
   data() {
     return{
@@ -45,20 +45,6 @@ body {
 }
 
 
-.btn {
-  display: inline-block;
-  background: black;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 15px;
-  font-family: inherit;
-
-}
 
 
 
