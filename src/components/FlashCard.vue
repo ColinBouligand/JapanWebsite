@@ -27,7 +27,7 @@ export default {
             console.log(content, column)
             console.log(this.$props.content[(this.$props.column)])
         },
-        turnCard(event){
+        async turnCard(event){
             //envoie le kanji et la colonne du kanji sélectionné
             this.$emit('turn-card', event.explicitOriginalTarget.dataset.kanji,event.explicitOriginalTarget.dataset.num)
             //event.target.classList.toggle('verso')
