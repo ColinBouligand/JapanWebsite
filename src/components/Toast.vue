@@ -1,7 +1,7 @@
 <template>
  <div class="toast-wrapper">
   <div class="toast">
-     {{traduction}}
+     {{texte}}
     </div>
   </div>
 </template>
@@ -13,15 +13,15 @@
     components: {
     },
     props: {
-        trad: Object
+        text: String
     },   
     data() {
         return {
-            traduction: ""
+            texte: ""
         }
     },created() {
-        if(this.trad){ // problème si retard avec l'API
-            this.traduction = this.trad.translatedText.toUpperCase()
+        if(this.text){ // problème si retard avec l'API
+            this.texte = this.text.toUpperCase()
 
         }
     } 
@@ -44,4 +44,6 @@
     margin: 0 auto;
     text-align: center;
   }
+
+  
 </style>

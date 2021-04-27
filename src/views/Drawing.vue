@@ -1,12 +1,13 @@
 <template>
-<div v-if="showAddTask"> <AddTask  /></div>
     <!--<Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks" /> -->
 
-<Header @toggle-add-task="toggleAddTask" title="Atelier Dessin" :showAddTask="showAddTask"/>
+<Button @click="changeTraining()" :text="training ? 'Dessin':'Entrainement'" color="Orange"/>
+<Select v-if="training && kanjisSelect" :content="kanjisSelect" @select-change="selectChange"/>
+<Header  title="Atelier Dessin" />
 
 <div id="canvas-container">
   
-    <Canvas @add-drawing="addDrawing"/>
+    <Canvas :training="training" @add-drawing="addDrawing" :kanji="kanji"/>
 </div>
 
 <Drawings :drawings="drawings"/>
@@ -18,27 +19,31 @@
 <script>
 
 import Drawings from '../components/Drawings'
-import AddTask from '../components/AddTask'
-
 import Header from '../components/header'
-
 import Canvas from '../components/Canvas'
+import Button from '../components/button'
+import Select from '../components/Select'
+
 
 
 export default {
-    name: 'Home',
+    name: 'Drawing',
     props:{
-        showAddTask: Boolean,
     },
     components: {
         Drawings,
-        AddTask,
         Header,
-        Canvas
+        Canvas,
+        Button,
+        Select,
     },
     data() {
         return {
         drawings: [],
+        kanjisSelect: [],
+        training: false,
+        kanji: ""
+
         }
     },
      methods: {
@@ -85,11 +90,38 @@ export default {
         const res = await fetch('http://localhost:5000/drawings')
         const data = await res.json()
         return data
+      },
+      async fetchKanjisSelect(){
+        const res = await fetch('https://kanjiapi.dev/v1/kanji/grade-1')
+        const data = await res.json()
+        return data
+      },
+      changeTraining(){
+        this.training = !this.training
+        this.$forceUpdate();
+
+      },
+      selectChange(kanji){
+        console.log(kanji)
+        this.kanji = kanji
+        this.$forceUpdate();
+
       }
 
   },
   async created() {
-    this.drawings = await this.fetchDrawings()
+    this.kanjisSelect = await this.fetchKanjisSelect()//{ 1:"1", 2:"2" , 3:"3"}
+    console.log(this.kanjisSelect)
+    //this.drawings = await this.fetchDrawings()
+  },
+  computed : {
+    options() {
+       return Object.keys(this.kanjisSelect).map(k => {
+        let o = this.kanjisSelect[k]
+        console.log(o)
+        return `${o}`
+      })
+    }
   }
 }
 
@@ -110,6 +142,15 @@ export default {
       position:relative;
       margin-left:25%;
       align-items:center;
+      min-width:150px;
+      min-height:100px;
+
+    }
+    Select {
+      position: relative;
+      margin-left: 43%;
+      width:3%;
+      min-width:40px;
 
     }
 </style>

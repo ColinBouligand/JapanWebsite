@@ -30,7 +30,9 @@ export default {
           {
               res+= value[i] + " - "
           }
-          console.log(res)
+          /*if(Object.keys(value).length  > 6){ //changement de l'espacement si trop de résultats
+              document.getElementsByClassName('back')[0].style.lineHeight = "200px"
+          }*/
           return res.substring(0, res.length - 2); // enlève le dernier tiret
         }
     },

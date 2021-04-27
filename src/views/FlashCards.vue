@@ -1,24 +1,101 @@
 <template>
-    <Cards :kanjis="kanjis" />
-    <Cards :kanjis="meanings" />
-
+<div class="flashcard">
+    <Cards @turn-card="turnCard" v-if="kanjisv1" :content="kanjisv1" column="kanji" fontSize="50px" num="1"/>
+    <Cards @turn-card="turnCard" v-if="kanjisv2" :content="kanjisv2" column="meanings" fontSize="40px" num="2" />
+</div>
+    <transition name="toast">
+    <Toast v-if="showToast" :text="text"  />
+    </transition> 
 </template>
 
 <script>
 import Cards from '../components/Cards'
+import Toast from '../components/Toast'
 
 export default {
-    name: 'Home',
+    name: 'FlashCards',
     components: {
-        Cards
+        Cards,
+        Toast
     },
      data() {
         return {
-            kanjis: [],
-            meanings: [],
+            kanjis1: [],
+            kanjis2:[],
+            nbGagne: 0,
+            lastClicked: "",
+            showToast: false,
+            text:"",
         }
     },
     methods: {
+        async turnCard(kanji,colonne){
+            console.log(kanji,colonne)
+          //si ce n'est pas le 1er clic
+          if(this.lastClicked)
+          {
+              console.log(this.lastClicked, kanji)
+              console.log(this.lastClicked,colonne)
+            //si les cartes correspondent -> vérifier qu'il n'a pas cliqué 2 fois sur la même carte
+            if((this.lastClicked[0] == kanji) && (this.lastClicked[1] !== colonne))
+            {
+                this.text = "gagné"
+                this.nbGagne++
+
+                 if(this.nbGagne == 5)
+                {
+                    console.log("GAGNE")
+                    this.nbGagne = 0
+                    this.initialize()
+                }
+                console.log(this.kanjis1)
+                this.kanjis1 = await this.remove(this.kanjis1, kanji)
+                this.kanjis2 = await this.remove(this.kanjis2, kanji)
+
+                //delete this.kanjis1[4]
+                //delete this.kanjis2[4]
+                //console.log(this.kanjis1)
+                
+                /*let copy = JSON.parse(JSON.stringify(this.kanjis1))
+                delete copy[0]
+                this.kanjis1 = copy*/
+
+                //delete this.kanjis1[kanji]
+               /* Object.keys(this.kanjis1).forEach(function(key){
+                if (this.kanjis1[key].kanji === kanji) {
+                    //delete this.kanjis1[key];
+                    //delete this.kanjis2[key];
+
+                }
+                console.log(this.kanjis1, this.kanjis2)
+            });*/
+            }
+            else {
+                this.text = "perdu"
+            }
+            this.lastClicked= ""
+            this.triggerToast()
+         }
+          else{
+              this.lastClicked= kanji + colonne
+              console.log("kanji", this.lastClicked[0])
+              //console.log("2", this.lastClicked)
+          }
+      },
+    async remove(list, kanji)
+      {
+          if(list){
+        var newList = []
+        for(var i =0; i < list.length; i++)
+        {
+            if(list[i].kanji!== kanji)
+            {
+                newList.push(list[i])
+            }
+        }
+          }
+        return newList
+      },
         //récup tous les kanjis de grade 1
     async fetchKanjis(){
         const res = await fetch('https://kanjiapi.dev/v1/kanji/grade-1')
@@ -45,22 +122,97 @@ export default {
         const data = await res.json()
         return data
 
-      }
-    
-       
+      },
+      async initialize(){
+        this.kanjis1= this.kanjis2=null
+        this.temp = await this.fetchNKanjis(5) // temp permet de laisser kanjis à undefined tant que toutes les données ne sont pas chargées -> ne charge pas les composants enfants sans les données
+        for(var k in this.temp)
+        {
+            this.temp[k]= await this.getInfosKanji(this.temp[k])
+            //this.meanings.push(await this.getInfosKanji(this.kanjis[k]).meanings)
+        }
+        //mélanger la liste
+        this.kanjis1= this.temp    
+        this.kanjis2 = await this.shuffle(this.kanjis1)
+        //console.log(this.kanjis2)
+
+        //console.log(this.kanjis1, this.kanjis2)
+      },
+      triggerToast(){
+        this.showToast = true;
+        setTimeout(() => this.showToast = false, 1000)
+      },
+      //mélange la liste passée en paramètre -> permet aux cartes des flashcards de ne pas être en face l'une de l'autre
+      async shuffle(list)
+      {
+        var nouvelleList = [];
+        var indiceList = []
+        var j, x, i;
+
+        for(i =0; i < list.length; i++)
+        {
+            indiceList.push(i)
+        }
+        for (i = list.length - 1; i > 0; i--) {
+            
+            j = Math.floor(Math.random() * (i + 1));
+            x = indiceList[i];
+            indiceList[i] = indiceList[j];
+            indiceList[j] = x;
+        }
+        for(i =0; i < list.length; i++)
+        {
+            nouvelleList.push(list[indiceList[i]])
+        }
+        return nouvelleList;
+        }
     },
     async created() {
-        this.kanjis = await this.fetchNKanjis(5)
-        for(var k in this.kanjis)
-        {
-            //this.kanjis[k]= await this.getInfosKanji(this.kanjis[k])
-            this.meanings.push(await this.getInfosKanji(this.kanjis[k]).meanings)
+        this.initialize()
+    },
+    computed: {
+        kanjisv1() {
+            return this.kanjis1
+        },
+        kanjisv2() {
+            return this.kanjis2
         }
-        console.log(this.kanjis)
-
     }
 }
 </script>
 <style scoped>
+
+.flashcard {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* animation toast */
+.toast-enter-from {
+    opacity: 0;
+    transform: translateY(+60px)
+}
+.toast-enter-to {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-enter-active {
+    transition: all 0.3s ease;
+}
+
+.toast-leave-from {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-leave-to {
+    opacity: 0;
+    transform: translateY(+60px)
+}
+.toast-leave-active {
+    transition: all 0.3s ease;
+}
 
 </style>

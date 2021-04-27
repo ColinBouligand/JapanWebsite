@@ -4,7 +4,7 @@
     </div>
     <Button @click="changeKanji();" text="Prochain Kanji" color="#F5F5F5"/>
     <transition name="toast">
-    <Toast v-if="showToast" :trad="trad"  />
+    <Toast v-if="showToast" :text="trad.translatedText"  />
     </transition> 
 
 </template>
@@ -15,7 +15,7 @@ import Button from '../components/button'
 import Toast from '../components/Toast'
 
 export default {
-    name: 'Home',
+    name: 'MemoryCard',
     components: {
         Card,
         Button,
@@ -24,7 +24,7 @@ export default {
      data() {
         return {
             kanji: [],
-            trad: [],
+            trad: "",
             showToast: false
         }
     },
@@ -72,7 +72,7 @@ export default {
           //return trad
       },
     async changeKanji(){
-         this.kanji = await this.fetchNKanjis(1)
+        this.kanji = await this.fetchNKanjis(1)
         this.kanji = await this.getInfosKanji(this.kanji)
         this.trad = await this.getFrench(this.kanji.meanings)
         this.triggerToast()

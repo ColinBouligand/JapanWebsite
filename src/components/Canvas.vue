@@ -1,8 +1,9 @@
 <template>
-
+    <h2 v-if="training" >Entrainement</h2>
     <canvas id="canvas"></canvas>
     <Button @click="eraseDraw()" text="Réinitialiser" color="blue"/>
-    <Button @click="saveDraw()" text="Sauvegarder" color="green"/>
+    <Button v-if="!training" @click="saveDraw()" text="Sauvegarder" color="green"/>
+    <img id="imageKanji" src="../assets/kanji.png">
 
    <!-- <img src="../assets/paintbrush.svg" alt="" style="width:100px; height:100px"/> -->
 
@@ -18,6 +19,10 @@ export default{
     components: {
         Button
     },
+    props: {
+        training: Boolean,
+        kanji: String
+    },
     data() {
         return{
             canvas: "",
@@ -32,7 +37,7 @@ export default{
         document.body.style.margin = 0;
         this.canvas.style.position = 'relative'; // à garder fixed, sinon getBoundingClientRect() ne renvoie pas de ????? -> ne fonctionne que en plein écran :'(
         this.canvas.style.border ='solid black 1px';
-        this.canvas.style.width='50%';  
+        this.canvas.style.width='30%';  
         this.canvas.style.height='60%';
         this.canvas.width  = this.canvas.offsetWidth;
         this.canvas.height = this.canvas.offsetHeight; // A RESOLU MON PROBLEME DE TRAIT DECALE !
@@ -41,8 +46,10 @@ export default{
 
 
         window.onresize = function() { //dès que la fenêtre change de taille, on doit réappliquer la taille au canvas
+        if(this.canvas){ //sinon ça s'active même sur les fenêtres ou le canvas n'est pas défini
             this.canvas.width  = this.canvas.offsetWidth;
             this.canvas.height = this.canvas.offsetHeight;
+            }
         };
 
         // get canvas 2D context and set him correct size
@@ -50,6 +57,12 @@ export default{
 
         const canvas = this.canvas
         const ctx= this.ctx
+        
+
+        this.eraseDraw()
+            //const img = document.getElementById('imageKanji')
+            //this.ctx.drawImage(img,1,1)
+   
 
 
         // last known position
@@ -73,28 +86,37 @@ export default{
             // mouse left button must be pressed
             if (e.buttons !== 1) return;
 
-            ctx.beginPath(); // begin
+            ctx.beginPath(); 
 
             ctx.lineWidth = 3;
             ctx.lineCap = 'round';
-            ctx.strokeStyle = 'black';
+            ctx.strokeStyle = this.training ?  'black' : 'red'; //noir si pas de kanji en dessous !
 
-            ctx.moveTo(pos.x, pos.y); // from
+            ctx.moveTo(pos.x, pos.y); // point de départ
             setPosition(e);
-            ctx.lineTo(pos.x, pos.y); // to
+            ctx.lineTo(pos.x, pos.y); // point d'arrivée
 
-            ctx.stroke(); // draw it!
+            ctx.stroke(); // tracer le trait
         }
     
     },
      methods:{
          //Clic sur réinitialiser -> nettoie le canvas
          eraseDraw() {
-               this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);           
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+            //QUE SI L'UTILISATEUR VEUT DESSINER PAR DESSUS UN KANJI
+            if(this.training){
+            //const img = document.getElementById('imageKanji') //DESSINE L'IMAGE SITUEE SOUS LE CANVAS
+            //this.ctx.drawImage(img,1,1)
+            this.drawKanjiTraining(this.kanji)
+
+            }
+                          
         },
         //Clic sur sauvegarder -> propose de télécharger l'image et l'enregistre dans la base
         saveDraw() {
-             this.imgUrl= this.canvas.toDataURL( ) ; // This method saves graphics in png
+            this.imgUrl= this.canvas.toDataURL( ) ; // This method saves graphics in png
             //console.log(this.imgUrl)
             var image = this.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
             //console.log(image)
@@ -111,8 +133,29 @@ export default{
             this.$emit('add-drawing', newDrawing)
             //envoyer sous le format image:dataURL
             //document.getElementById('cimg').src = imgurl; // This will set img src to dataurl(png) so that it can be saved as image.
+        },
+        drawKanjiTraining(kanji){
+            this.ctx.lineWidth = 3;
+            this.ctx.lineCap = 'round';
+            this.ctx.strokeStyle = 'black'; //noir si pas de kanji en dessous !
+            this.ctx.font = "100px sans-serif";
+            //this.ctx.fillText(kanji, 60, 100);
+            this.ctx.strokeText(kanji, 60, 100);
         }
-    } 
+    },
+    watch : {
+        training() {
+                this.eraseDraw()
+        },
+        kanji(newKanji, oldKanji){
+            console.log("KANJI", oldKanji, newKanji)
+            //this.kanji = newKanji
+            this.eraseDraw()
+        }
+    },
+    created() {
+    },
+    emits: ['add-drawing'],
 }
     
 </script>
@@ -131,6 +174,10 @@ export default{
     width:50%;
     margin:5px;
 
+ }
+
+ #imageKanji {
+     visibility: hidden;
  }
 
 </style>

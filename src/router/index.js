@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import FlashCards from '../views/FlashCards'
 import MemoryCard from '../views/MemoryCard'
 import Home from '../views/Home'
-import Kanji from '../views/Kanji'
+import Drawing from '../views/Drawing'
 import About from '../views/About'
 
 
@@ -28,9 +28,9 @@ const routes = [
         component: MemoryCard
     },
     {
-        path: '/kanji',
-        name: 'Kanji',
-        component: Kanji
+        path: '/Drawing',
+        name: 'Drawing',
+        component: Drawing
     },
     {
         path: '/about',

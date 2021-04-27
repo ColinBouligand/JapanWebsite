@@ -1,7 +1,7 @@
 <template>
     <nav>
       <a><router-link to="/Home"><img src="../assets/logoBeau.svg" alt="logo Site" ></router-link></a>  
-      <a><router-link to="/Kanji"><span>Atelier Dessin</span></router-link></a>    
+      <a><router-link to="/Drawing"><span>Atelier Dessin</span></router-link></a>    
       <a><router-link to="/FlashCards"><span>FlashCards</span></router-link></a>
       <a><router-link to="/MemoryCard"><span>MemoryCard</span></router-link></a>
     </nav>
