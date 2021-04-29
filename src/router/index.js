@@ -4,6 +4,7 @@ import MemoryCard from '../views/MemoryCard'
 import Home from '../views/Home'
 import Drawing from '../views/Drawing'
 import About from '../views/About'
+import Kanji from '../views/Kanji'
 
 
 const routes = [
@@ -31,6 +32,11 @@ const routes = [
         path: '/Drawing',
         name: 'Drawing',
         component: Drawing
+    },
+    {
+        path: '/kanji/:kanji',
+        name: 'Kanji',
+        component: Kanji
     },
     {
         path: '/about',

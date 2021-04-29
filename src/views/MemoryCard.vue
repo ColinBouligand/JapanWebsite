@@ -1,8 +1,10 @@
 <template>
+    <a :href="getURlKanji()" >Détails</a>
+    <Button @click="changeKanji();" text="Prochain Kanji" color="#F5F5F5"/>
     <div class="card">
         <Card :kanji="kanji"  />
     </div>
-    <Button @click="changeKanji();" text="Prochain Kanji" color="#F5F5F5"/>
+
     <transition name="toast">
     <Toast v-if="showToast" :text="trad.translatedText"  />
     </transition> 
@@ -80,6 +82,9 @@ export default {
     triggerToast(){
         this.showToast = true;
         setTimeout(() => this.showToast = false, 1000)
+    },
+    getURlKanji(){
+        return `${window.location.origin}/kanji/${this.kanji.kanji} `
     }   
        
     },
@@ -104,7 +109,14 @@ export default {
 Button {
     color:black;
     margin-left:45%;
-    margin-top: 5%;
+    margin-top: 4%;
+}
+
+a {
+    color: white;
+    margin-left: 48%;
+    margin-top: 1%;
+
 }
 
 /* animation toast */

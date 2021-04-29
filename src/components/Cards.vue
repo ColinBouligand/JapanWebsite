@@ -1,7 +1,7 @@
 <template>
     <div id="cards">
     <div class="card" :key="c.id" v-for="c in content" >
-        <FlashCard ref="flashcard" @turn-card="turnCard"  :content="c" :column="column" :fontSize="fontSize" :num="num"/>
+        <FlashCard ref="flashcard" @turn-card="turnCard"  :content="c" :column="column" :fontSize="fontSize" :num="num" :turned="allRecto" />
     </div>
     </div>
 </template>
@@ -16,6 +16,7 @@
             column: String,
             fontSize: String,
             num: String,
+            allRecto: Boolean,
         },
         data()  {
             return {
@@ -32,14 +33,19 @@
             }
         },
         async created() {
-            console.log('created')    
+            console.log(this.allRecto)    
             //this.$forceUpdate()         
         },
         setup : () => {
             //const flashcard = 
             //return flashcard
+        },watch:
+        {
+            allRecto()
+            {
+                console.log("RECTO" , this.allRecto)
+            }
         }
-        
     }
 </script>
 

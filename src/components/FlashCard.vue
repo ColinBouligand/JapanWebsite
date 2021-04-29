@@ -12,7 +12,8 @@ export default {
         content: Object,
         column: String,
         fontSize: String,
-        num: String
+        num: String,
+        turned: Boolean,
     },
     components: {
     },
@@ -41,9 +42,20 @@ export default {
             this.minSize=true;
 
         }
+
         //if(this.content[this.column][0].length > 8)
         
     
+    },watch:
+    {
+    turned(newValue)
+    {
+        if(newValue)
+        {
+            this.clicked=false
+
+        }
+    }
     },
     emits: ['turn-card'],
     computed: {

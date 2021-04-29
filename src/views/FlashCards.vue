@@ -2,8 +2,8 @@
     <Select v-model="selectedFamily" :content="families" @select-change="selectChange"/>
 
 <div class="flashcard">
-    <Cards @turn-card="turnCard" v-if="kanjisv1" :content="kanjisv1" column="kanji" fontSize="50px" num="1"/>
-    <Cards @turn-card="turnCard" v-if="kanjisv2" :content="kanjisv2" column="meanings" fontSize="30px" num="2" />
+    <Cards @turn-card="turnCard" v-if="kanjisv1" :content="kanjisv1" column="kanji" fontSize="50px" num="1" :allRecto="allTurned"/>
+    <Cards @turn-card="turnCard" v-if="kanjisv2" :content="kanjisv2" column="meanings" fontSize="30px" num="2" :allRecto="allTurned" />
 </div>
     <transition name="toast">
     <Toast v-if="showToast" :text="text"  />
@@ -32,6 +32,7 @@ export default {
             text:"",
             families:[],
             selectedFamily: "1",
+            allTurned: true
         }
     },
     methods: {
@@ -82,9 +83,12 @@ export default {
             }
             this.lastClicked= ""
             this.triggerToast()
+            this.allTurned = true
+            console.log("changement")
          }
           else{
               this.lastClicked= kanji + colonne
+              this.allTurned= false
               console.log("kanji", this.lastClicked[0])
               //console.log("2", this.lastClicked)
           }
