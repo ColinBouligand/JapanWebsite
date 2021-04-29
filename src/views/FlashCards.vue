@@ -1,7 +1,9 @@
 <template>
+    <Select v-model="selectedFamily" :content="families" @select-change="selectChange"/>
+
 <div class="flashcard">
     <Cards @turn-card="turnCard" v-if="kanjisv1" :content="kanjisv1" column="kanji" fontSize="50px" num="1"/>
-    <Cards @turn-card="turnCard" v-if="kanjisv2" :content="kanjisv2" column="meanings" fontSize="40px" num="2" />
+    <Cards @turn-card="turnCard" v-if="kanjisv2" :content="kanjisv2" column="meanings" fontSize="30px" num="2" />
 </div>
     <transition name="toast">
     <Toast v-if="showToast" :text="text"  />
@@ -11,12 +13,14 @@
 <script>
 import Cards from '../components/Cards'
 import Toast from '../components/Toast'
+import Select from '../components/Select'
 
 export default {
     name: 'FlashCards',
     components: {
         Cards,
-        Toast
+        Toast,
+        Select
     },
      data() {
         return {
@@ -26,6 +30,8 @@ export default {
             lastClicked: "",
             showToast: false,
             text:"",
+            families:[],
+            selectedFamily: "1",
         }
     },
     methods: {
@@ -41,16 +47,17 @@ export default {
             {
                 this.text = "gagné"
                 this.nbGagne++
+                
+                console.log(this.kanjis1)
+                this.kanjis1 = await this.remove(this.kanjis1, kanji)
+                this.kanjis2 = await this.remove(this.kanjis2, kanji)
 
-                 if(this.nbGagne == 5)
+                if(Object.keys(this.kanjis1).length == 0)
                 {
                     console.log("GAGNE")
                     this.nbGagne = 0
                     this.initialize()
                 }
-                console.log(this.kanjis1)
-                this.kanjis1 = await this.remove(this.kanjis1, kanji)
-                this.kanjis2 = await this.remove(this.kanjis2, kanji)
 
                 //delete this.kanjis1[4]
                 //delete this.kanjis2[4]
@@ -97,16 +104,24 @@ export default {
         return newList
       },
         //récup tous les kanjis de grade 1
-    async fetchKanjis(){
-        const res = await fetch('https://kanjiapi.dev/v1/kanji/grade-1')
-        const data = await res.json()
-        return data
+    async fetchKanjis(family){
+        if(family === "tous")
+        {
+            const res = await fetch('https://kanjiapi.dev/v1/kanji/all')
+            const data = await res.json()
+            return data
+
+
+        }   
+        else{
+            const res = await fetch('https://kanjiapi.dev/v1/kanji/grade-'+family)
+            const data = await res.json()
+            return data
+        }
       },
     //renvoie n kanjis aléatoires de l'api (de grade 1)
-    async fetchNKanjis(n){
-        const res = await fetch('https://kanjiapi.dev/v1/kanji/grade-1')
-        const data = await res.json()
-
+    async fetchNKanjis(n, family){
+        const data = await this.fetchKanjis(family)
 
         let result = []
         for(let i=0;i <n; i++)
@@ -124,8 +139,9 @@ export default {
 
       },
       async initialize(){
+          console.log("initialize")
         this.kanjis1= this.kanjis2=null
-        this.temp = await this.fetchNKanjis(5) // temp permet de laisser kanjis à undefined tant que toutes les données ne sont pas chargées -> ne charge pas les composants enfants sans les données
+        this.temp = await this.fetchNKanjis(5,this.selectedFamily) // temp permet de laisser kanjis à undefined tant que toutes les données ne sont pas chargées -> ne charge pas les composants enfants sans les données
         for(var k in this.temp)
         {
             this.temp[k]= await this.getInfosKanji(this.temp[k])
@@ -134,13 +150,17 @@ export default {
         //mélanger la liste
         this.kanjis1= this.temp    
         this.kanjis2 = await this.shuffle(this.kanjis1)
-        //console.log(this.kanjis2)
-
-        //console.log(this.kanjis1, this.kanjis2)
+        this.families = ["1","2","3","4","5","6","8"]//,"tous"] //familles de kanji proposées dans le select
+        //all comporte des kanji non traduits -> peut-être à enlever
       },
       triggerToast(){
         this.showToast = true;
         setTimeout(() => this.showToast = false, 1000)
+      },
+      selectChange(family){
+        this.selectedFamily = family
+        this.initialize(); //réactualise les cartes
+
       },
       //mélange la liste passée en paramètre -> permet aux cartes des flashcards de ne pas être en face l'une de l'autre
       async shuffle(list)
@@ -214,5 +234,13 @@ export default {
 .toast-leave-active {
     transition: all 0.3s ease;
 }
+
+ Select {
+      position: relative;
+      margin-left: 43%;
+      width:3%;
+      min-width:40px;
+
+    }
 
 </style>

@@ -1,6 +1,6 @@
 <template>
-<div  v-bind:data-kanji="content.kanji" :style="{fontSize: fontSize, color: correct ? 'green' : 'red'}" 
-v-bind:class="{verso : clicked}  " @click="turnCard" :data-num="num"> {{content[column][0]}} </div>
+<div  v-bind:data-kanji="content.kanji" :style="{fontSize: fontSize, color: clicked ? 'black' : 'red'}" 
+v-bind:class="{verso : clicked, minSize: minSize}  " @click="turnCard" :data-num="num"> {{content[column][0]}} </div>
 </template>
 
 <script>
@@ -19,7 +19,7 @@ export default {
     data() {
         return {
             clicked: false,
-            correct: false
+            minSize: false
         }
     },
     methods: {
@@ -35,8 +35,19 @@ export default {
             this.correct = !this.correct
         }
     },
+    created() {
+        if(this.column == "meanings")
+        {
+            this.minSize=true;
+
+        }
+        //if(this.content[this.column][0].length > 8)
+        
+    
+    },
     emits: ['turn-card'],
     computed: {
+
             //clicked: function() {return false;},
             //correct: function() {return false}
     }
@@ -44,6 +55,12 @@ export default {
 </script>
 
 
+
 <style scoped>
+.minSize {
+    font-size: 30px;
+    padding:10%;
+}
+
 
 </style>

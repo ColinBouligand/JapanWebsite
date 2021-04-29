@@ -28,10 +28,11 @@ export default {
           var res=""
           for(var i in value)
           {
-              res+= value[i] + " - "
+              res+= `${value[i]} - `  //  équivalent en template litterals de value[i] + " - "
           }
-          /*if(Object.keys(value).length  > 6){ //changement de l'espacement si trop de résultats
-              document.getElementsByClassName('back')[0].style.lineHeight = "200px"
+          /*if(Object.keys(value).length  > 5){ //changement de l'espacement si trop de résultats
+          console.log("trop grand")
+              document.getElementsByClassName('back')[0].style.lineHeight = "75px"
           }*/
           return res.substring(0, res.length - 2); // enlève le dernier tiret
         }

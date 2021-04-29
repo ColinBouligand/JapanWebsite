@@ -1,6 +1,7 @@
 <template>
     <h2 v-if="training" >Entrainement</h2>
     <canvas id="canvas"></canvas>
+    <input type="color" id="colorpicker">
     <Button @click="eraseDraw()" text="Réinitialiser" color="blue"/>
     <Button v-if="!training" @click="saveDraw()" text="Sauvegarder" color="green"/>
     <img id="imageKanji" src="../assets/kanji.png">
@@ -27,7 +28,8 @@ export default{
         return{
             canvas: "",
             ctx: "",
-            imgUrl: ""
+            imgUrl: "",
+            color: ""
         }
     },
     mounted(){
@@ -57,6 +59,14 @@ export default{
 
         const canvas = this.canvas
         const ctx= this.ctx
+
+        var colorLocal = ""
+
+        //récupération de la couleur
+        const colorPicker = document.getElementById('colorpicker')
+        colorPicker.addEventListener('input', function(){
+            colorLocal = colorPicker.value
+        });
         
 
         this.eraseDraw()
@@ -90,7 +100,7 @@ export default{
 
             ctx.lineWidth = 3;
             ctx.lineCap = 'round';
-            ctx.strokeStyle = this.training ?  'black' : 'red'; //noir si pas de kanji en dessous !
+            ctx.strokeStyle = colorLocal //noir si pas de kanji en dessous !
 
             ctx.moveTo(pos.x, pos.y); // point de départ
             setPosition(e);

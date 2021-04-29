@@ -1,7 +1,7 @@
 <template>
     <div id="cards">
     <div class="card" :key="c.id" v-for="c in content" >
-        <FlashCard @turn-card="turnCard"  :content="c" :column="column" :fontSize="fontSize" :num="num"/>
+        <FlashCard ref="flashcard" @turn-card="turnCard"  :content="c" :column="column" :fontSize="fontSize" :num="num"/>
     </div>
     </div>
 </template>
@@ -29,35 +29,15 @@
         methods: {
          turnCard(kanji, colonne){
             this.$emit('turn-card', kanji,colonne)
-
-        }
+            }
         },
         async created() {
-             /*console.log(this.content)
-             console.log(this.column)
-
-             for(var i in this.content)
-             {
-                 console.log(this.content[i].kanji)
-                console.log(this.content[i].meanings[0])
-
-             }*/
-/*
-             console.log(this.content[0].meanings)
-             if(this.content && this.content[0]){
-                 //console.log(Object.keys(this.content))
-                 console.log(this.content[0])
-                    for(var i in Object.keys(this.content))
-                    {
-                        console.log("data")
-                        this.data.push(this.content[i].this.column)
-                        
-                    }
-                    console.log("fin")
-                    console.log(this.data)
-             }*/
-
-             
+            console.log('created')    
+            //this.$forceUpdate()         
+        },
+        setup : () => {
+            //const flashcard = 
+            //return flashcard
         }
         
     }
