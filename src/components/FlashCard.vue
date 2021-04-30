@@ -30,12 +30,14 @@ export default {
         },
         async turnCard(event){
             //envoie le kanji et la colonne du kanji sélectionné
-            if(event)
-            {
+            console.log(event)
+            console.log(event.explicitOriginalTarget)
+            console.log(event.explicitOriginalTarget.dataset)
+            
                 this.$emit('turn-card', event.explicitOriginalTarget.dataset.kanji,event.explicitOriginalTarget.dataset.num)
                 this.clicked =!this.clicked
                 this.correct = !this.correct
-            }
+            
 
         }
     },
