@@ -53,7 +53,7 @@ const routes = [
 ]
 
 const router = createRouter({
-    mode: "hash", //censé résoudre le problème de 404 quand on recharge une page autre que celle d'accueil
+    mode: "history", //censé résoudre le problème de 404 quand on recharge une page autre que celle d'accueil
     history: createWebHistory(process.env.BASE_URL),routes,
 })
 
