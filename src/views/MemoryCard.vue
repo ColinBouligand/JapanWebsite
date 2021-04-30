@@ -1,4 +1,6 @@
 <template>
+<img @click="openModal" class="logo_help" src="../assets/logo_help.png" alt="logo aide" />
+<Modal @close-modal="modalClosed" v-if="showModal" :text="textModal"/>
     <a :href="getURlKanji()" >Détails</a>
     <Button @click="changeKanji();" text="Prochain Kanji" color="#F5F5F5"/>
     <div class="card">
@@ -15,19 +17,23 @@
 import Card from '../components/Card'
 import Button from '../components/button'
 import Toast from '../components/Toast'
+import Modal from '../components/Modal'
 
 export default {
     name: 'MemoryCard',
     components: {
         Card,
         Button,
-        Toast
+        Toast,
+        Modal,
     },
      data() {
         return {
             kanji: [],
             trad: "",
-            showToast: false
+            showToast: false,
+            textModal: "Cette page est là pour vous aider à retenir les kanji. Elle vous permet de vous tester vous même sur votre connaissance de ces symboles. Vous pouvez ensuite vérifier votre réponse en passant le curseur sur la carte, ayant ainsi accès aux traductions anglaises (au verso) et française (venant d'en bas). Vous pouvez ensuite, soit passez à un autre kanji, soit accéder à la page du kanji via le lien 'détail'.",
+            showModal: false,
         }
     },
     methods: {
@@ -85,7 +91,13 @@ export default {
     },
     getURlKanji(){
         return `${window.location.origin}/kanji/${this.kanji.kanji} `
-    }   
+    },
+    openModal(){
+        this.showModal= ! this.showModal
+    },
+    modalClosed(){
+        this.showModal=false
+    },   
        
     },
     async created() {
@@ -114,7 +126,7 @@ Button {
 
 a {
     color: white;
-    margin-left: 48%;
+    margin-left: 45%;
     margin-top: 1%;
 
 }
@@ -145,4 +157,13 @@ a {
 .toast-leave-active {
     transition: all 0.3s ease;
 }
+
+.logo_help {
+        width:3%;
+        min-width:35px;
+        left:95%;
+        margin-top:1%;
+        position:relative
+
+    }
 </style>

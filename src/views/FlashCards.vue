@@ -1,4 +1,6 @@
 <template>
+<img @click="openModal" class="logo_help" src="../assets/logo_help.png" alt="logo aide" />
+<Modal @close-modal="modalClosed" v-if="showModal" :text="textModal"/>
     <Select v-model="selectedFamily" :content="families" @select-change="selectChange"/>
 
 <div class="flashcard">
@@ -14,13 +16,15 @@
 import Cards from '../components/Cards'
 import Toast from '../components/Toast'
 import Select from '../components/Select'
+import Modal from '../components/Modal'
 
 export default {
     name: 'FlashCards',
     components: {
         Cards,
         Toast,
-        Select
+        Select,
+        Modal,
     },
      data() {
         return {
@@ -32,7 +36,9 @@ export default {
             text:"",
             families:[],
             selectedFamily: "1",
-            allTurned: true
+            allTurned: true,
+            textModal: "Cette page est là pour tester votre connaissance des kanji en vous demandant d'associer un symbole à sa traduction en anglais. Vous devez donc cliquer d'abord sur un kanji puis sur sa traduction pour gagner. Vous pouvez choisir la difficulté allant de 1 à 8 grâce à l'outil de sélection situé au milieu en haut de la page.",
+            showModal: false
         }
     },
     methods: {
@@ -166,6 +172,12 @@ export default {
         this.initialize(); //réactualise les cartes
 
       },
+      openModal(){ //ouvre la modal sur un clic sur le logo help et la ferme si elle est déjà ouverte
+        this.showModal= ! this.showModal
+      },
+      modalClosed(){
+          this.showModal=false
+      },
       //mélange la liste passée en paramètre -> permet aux cartes des flashcards de ne pas être en face l'une de l'autre
       async shuffle(list)
       {
@@ -244,6 +256,15 @@ export default {
       margin-left: 43%;
       width:3%;
       min-width:40px;
+
+    }
+
+    .logo_help {
+        width:3%;
+        min-width:35px;
+        left:95%;
+        margin-top:1%;
+        position:relative
 
     }
 

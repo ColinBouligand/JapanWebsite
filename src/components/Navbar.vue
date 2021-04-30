@@ -1,9 +1,13 @@
 <template>
     <nav>
-      <a><router-link to="/Home"><img src="../assets/logoBeau.svg" alt="logo Site" ></router-link></a>  
-      <a><router-link to="/Drawing"><span>Atelier Dessin</span></router-link></a>    
-      <a><router-link to="/FlashCards"><span>FlashCards</span></router-link></a>
-      <a><router-link to="/MemoryCard"><span>MemoryCard</span></router-link></a>
+      <a><router-link to="/home"><img src="../assets/logoBeau.svg" alt="logo Site" ></router-link></a>  
+      <a><router-link to="/drawing"><span>Atelier Dessin</span></router-link></a>    
+      <a><router-link to="/flashCards"><span>FlashCards</span></router-link></a>
+      <a><router-link to="/memoryCard"><span>MemoryCard</span></router-link></a>
+      <a><router-link to="/search"><span>Trouver un Kanji</span></router-link></a>
+      <a><router-link to="/about"><span>A propos</span></router-link></a>
+
+
     </nav>
 </template>
 

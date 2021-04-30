@@ -5,6 +5,8 @@ import Home from '../views/Home'
 import Drawing from '../views/Drawing'
 import About from '../views/About'
 import Kanji from '../views/Kanji'
+import Search from '../views/Search'
+
 
 
 const routes = [
@@ -14,7 +16,7 @@ const routes = [
         component: Home
     },
     {
-        path: '/Home',
+        path: '/home',
         name: 'Home',
         component: Home
     },
@@ -29,7 +31,7 @@ const routes = [
         component: MemoryCard
     },
     {
-        path: '/Drawing',
+        path: '/drawing',
         name: 'Drawing',
         component: Drawing
     },
@@ -39,6 +41,11 @@ const routes = [
         component: Kanji
     },
     {
+        path: '/search',
+        name: 'Search',
+        component: Search
+    },
+    {
         path: '/about',
         name: 'About',
         component: About
@@ -46,6 +53,7 @@ const routes = [
 ]
 
 const router = createRouter({
+    mode: "hash", //censé résoudre le problème de 404 quand on recharge une page autre que celle d'accueil
     history: createWebHistory(process.env.BASE_URL),routes,
 })
 

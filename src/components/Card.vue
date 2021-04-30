@@ -1,11 +1,10 @@
 <template>
-<div class="content">
-    <div class="front">{{kanji.kanji}}</div>
-    <div class="back" >
-      <p>{{format(kanji.meanings)}}</p>
-       </div>
-</div>
-   <!--<p v-bind:class="{verso : clicked}" @click="turnCard">  </p> --> 
+  <div class="content">
+      <div class="front">{{kanji.kanji}}</div>
+      <div class="back" >
+        <p>{{format(kanji.meanings)}}</p>
+      </div>
+  </div>
 </template>
 
 <script>
@@ -20,7 +19,6 @@ export default {
     },
     data() {
         return {
-               // clicked: false
         }
     },
     methods: {
@@ -38,10 +36,6 @@ export default {
         }
     },
     async created(){
-        //console.log(this.kanji.meanings)
-        //console.log(this.kanji.meanings)
-        //this.meanings= JSON.stringify(this.kanji.meanings)
-        //console.log(this.meanings)
       
         }
 }
