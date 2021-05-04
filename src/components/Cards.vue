@@ -1,8 +1,6 @@
 <template>
     <div id="cards">
-    <div class="card" :key="c.id" v-for="c in content" >
-        <FlashCard ref="flashcard" @turn-card="turnCard"  :content="c" :column="column" :fontSize="fontSize" :num="num" :turned="allRecto" />
-    </div>
+        <FlashCard class="card" :key="c.id" v-for="c in content" ref="flashcard" @turn-card="turnCard"  :content="c" :column="column" :fontSize="fontSize" :num="num" :turned="allRecto" />
     </div>
 </template>
 
@@ -33,17 +31,18 @@
             }
         },
         async created() {
-            console.log(this.allRecto)    
+            //console.log(this.allRecto)    
             //this.$forceUpdate()         
         },
         setup : () => {
             //const flashcard = 
             //return flashcard
-        },watch:
+        },
+        watch:
         {
             allRecto()
             {
-                console.log("RECTO" , this.allRecto)
+                //console.log("RECTO" , this.allRecto)
             }
         }
     }
@@ -63,14 +62,20 @@
 
      text-align: center;
      border: solid white 1px;
-     background-color: black;
-     color:white;
+     background-color: #FAF0CD;
+     color:#9B2D23;
      padding:0;
      width:20%;
+     height:15%;
      margin-left:25%; 
      margin-top: 3%;
      cursor:pointer;
-}
 
+}
+/*
+.card:hover {
+    border: solid 3px black;
+}
+*/
 
 </style>

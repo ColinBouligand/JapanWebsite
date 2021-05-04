@@ -43,19 +43,19 @@ export default {
     },
     methods: {
         async turnCard(kanji,colonne){
-            console.log(kanji,colonne)
+            //console.log(kanji,colonne)
           //si ce n'est pas le 1er clic
           if(this.lastClicked)
           {
-              console.log(this.lastClicked, kanji)
-              console.log(this.lastClicked,colonne)
+              //console.log(this.lastClicked, kanji)
+              //console.log(this.lastClicked,colonne)
             //si les cartes correspondent -> vérifier qu'il n'a pas cliqué 2 fois sur la même carte
             if((this.lastClicked[0] == kanji) && (this.lastClicked[1] !== colonne))
             {
                 this.text = "gagné"
                 this.nbGagne++
                 
-                console.log(this.kanjis1)
+                //console.log(this.kanjis1)
                 this.kanjis1 = await this.remove(this.kanjis1, kanji)
                 this.kanjis2 = await this.remove(this.kanjis2, kanji)
 
@@ -90,12 +90,12 @@ export default {
             this.lastClicked= ""
             this.triggerToast()
             this.allTurned = true
-            console.log("changement")
+            //console.log("changement")
          }
           else{
               this.lastClicked= kanji + colonne
               this.allTurned= false
-              console.log("kanji", this.lastClicked[0])
+              //console.log("kanji", this.lastClicked[0])
               //console.log("2", this.lastClicked)
           }
       },

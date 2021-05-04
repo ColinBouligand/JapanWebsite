@@ -8,10 +8,10 @@
 
 <div id="canvas-container">
   
-    <Canvas :training="training" @add-drawing="addDrawing" :kanji="kanji"/>
+    <Canvas :training="training" @get-kanji="getKanji" :kanji="kanji"/>
 </div>
 
-<Drawings :drawings="drawings"/>
+<KanjiList :kanjis="kanjisAnswer"/>
  
 
 
@@ -19,12 +19,13 @@
 
 <script>
 
-import Drawings from '../components/Drawings'
+//import Drawings from '../components/Drawings'
 import Header from '../components/header'
 import Canvas from '../components/Canvas'
 import Button from '../components/button'
 import Select from '../components/Select'
 import Modal from '../components/Modal'
+import KanjiList from '../components/KanjiList'
 
 
 
@@ -34,12 +35,13 @@ export default {
     props:{
     },
     components: {
-        Drawings,
+      //  Drawings,
         Header,
         Canvas,
         Button,
         Select,
         Modal,
+        KanjiList,
     },
     data() {
         return {
@@ -49,13 +51,26 @@ export default {
         kanji: "",
         textModal: "Cette page est dédiée au tracé des kanji. Elle est composée de 2 parties. La première vous permet de dessiner un kanji que vous ne connaissez pas et d'accéder à ses informations. La deuxième partie, accessible via le bouton 'entrainement' vous permet de vous entrainer au tracé des kanji en choisissant un modèle.",
         showModal: false,
+        kanjisAnswer : []
 
         }
     },
      methods: {
-      async addDrawing(drawing){
-        console.log(drawing)
-        const res = await fetch('http://localhost:5000/drawings', {
+      async getKanji(kanjiDrawn){
+        console.log(kanjiDrawn)
+
+        const res = await fetch('https://kanjiapi.dev/v1/kanji/grade-1')
+        const data = await res.json()
+        let result = []
+        for(let i=0;i <12; i++)
+        {
+        var random = data[Math.floor(Math.random() * data.length)];
+        result.push(random)
+        }
+        
+        this.kanjisAnswer = result
+        console.log(this.kanjisAnswer) 
+        /*const res = await fetch('http://localhost:5000/drawings', {
           method: 'POST',
           headers: {
               'Content-type': 'application/json',
@@ -65,7 +80,10 @@ export default {
         })
         const data = await res.json()
 
-        this.drawings = [...this.drawings, data]
+        this.drawings = [...this.drawings, data]*/
+
+
+
       },
       /*async deleteTask(id){
         if(confirm('Are you sure ?')){

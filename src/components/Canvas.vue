@@ -127,20 +127,20 @@ export default{
         //Clic sur sauvegarder -> propose de télécharger l'image et l'enregistre dans la base
         saveDraw() {
             this.imgUrl= this.canvas.toDataURL( ) ; // This method saves graphics in png
-            //console.log(this.imgUrl)
+
+
             var image = this.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-            //console.log(image)
             var link = document.createElement('a');
             link.download = "kanji.png";
             link.href = image;
             link.click();
 
             //persistence données
-            const newDrawing = {
+            const kanjiDrawn = {
                     imgUrl: this.imgUrl
                 }
-
-            this.$emit('add-drawing', newDrawing)
+        
+            this.$emit('get-kanji', kanjiDrawn)
             //envoyer sous le format image:dataURL
             //document.getElementById('cimg').src = imgurl; // This will set img src to dataurl(png) so that it can be saved as image.
         },
@@ -165,7 +165,7 @@ export default{
     },
     created() {
     },
-    emits: ['add-drawing'],
+    emits: ['get-kanji'],
 }
     
 </script>
