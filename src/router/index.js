@@ -15,42 +15,67 @@ const routes = [
     {
         path: '/',
         name: 'Home',
-        component: Home
+        component: Home,
+        meta : {
+            title: 'Accueil'
+        }
     },
     {
         path: '/home',
         name: 'Home',
-        component: Home
+        component: Home,
+        meta : {
+            title: 'Accueil'
+        }
+        
     },
     {
         path: '/flashcards',
         name: 'FlashCards',
-        component: FlashCards
+        component: FlashCards,
+        meta : {
+            title: 'Flashcards'
+        }
     },
     {
         path: '/memorycard',
         name: 'MemoryCard',
-        component: MemoryCard
+        component: MemoryCard,
+        meta : {
+            title: 'Memorycard'
+        }
     },
     {
         path: '/drawing',
         name: 'Drawing',
-        component: Drawing
+        component: Drawing,
+        meta : {
+            title: 'Dessin'
+        }
     },
     {
         path: '/kanji/:kanji',
         name: 'Kanji',
-        component: Kanji
+        component: Kanji,
+        meta : {
+            title: 'Fiche Kanji'
+        }
     },
     {
         path: '/search',
         name: 'Search',
-        component: Search
+        component: Search,
+        meta : {
+            title: 'Recherche'
+        }
     },
     {
         path: '/about',
         name: 'About',
-        component: About
+        component: About,
+        meta : {
+            title: 'A propos'
+        }
     },
     /*{
         path: '*', 
@@ -58,9 +83,12 @@ const routes = [
         component: NotFoundComponent
     }*/
     { 
-        path: '/:pathMatch(.*)',
+        path: '/:pathMatch(.*)', //regex qui remplace * de vue2
         name: 'bad-not-found',
-        component: NotFoundComponent
+        component: NotFoundComponent,
+        meta : {
+            title: '404 not found'
+        }
     },
 ]
 
@@ -68,6 +96,11 @@ const router = createRouter({
     mode: "history", //censé résoudre le problème de 404 quand on recharge une page autre que celle d'accueil
     history: createWebHistory(process.env.BASE_URL),
     routes,
+})
+
+router.afterEach((to, from) =>{ 
+    console.log(from,to)
+    document.title = to.meta.title
 })
 
 export default router
