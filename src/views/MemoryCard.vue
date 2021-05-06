@@ -1,6 +1,8 @@
 <template>
 <img @click="openModal" class="logo_help" src="../assets/logo_help.png" alt="logo aide" />
 <Modal @close-modal="modalClosed" v-if="showModal" :text="textModal"/>
+
+<Select v-model="selectedFamily" :content="families" @select-change="selectChange"/>
     <a :href="getURlKanji()" >Détails</a>
     <Button @click="changeKanji();" text="Prochain Kanji" color="#F5F5F5"/>
     <div class="card">
@@ -18,6 +20,7 @@ import Card from '../components/Card'
 import Button from '../components/button'
 import Toast from '../components/Toast'
 import Modal from '../components/Modal'
+import Select from '../components/Select'
 
 export default {
     name: 'MemoryCard',
@@ -26,6 +29,7 @@ export default {
         Button,
         Toast,
         Modal,
+        Select,
     },
      data() {
         return {
@@ -34,12 +38,13 @@ export default {
             showToast: false,
             textModal: "Cette page est là pour vous aider à retenir les kanji. Elle vous permet de vous tester vous même sur votre connaissance de ces symboles. Vous pouvez ensuite vérifier votre réponse en passant le curseur sur la carte, ayant ainsi accès aux traductions anglaises (au verso) et française (venant d'en bas). Vous pouvez ensuite, soit passez à un autre kanji, soit accéder à la page du kanji via le lien 'détail'.",
             showModal: false,
+            selectedFamily:"1",
         }
     },
     methods: {
     //renvoie n kanjis aléatoires de l'api (de grade 1)
     async fetchNKanjis(n){
-        const res = await fetch('https://kanjiapi.dev/v1/kanji/grade-1')
+        const res = await fetch('https://kanjiapi.dev/v1/kanji/grade-'+this.selectedFamily)
         const data = await res.json()
 
 
@@ -98,9 +103,15 @@ export default {
     modalClosed(){
         this.showModal=false
     },   
+    selectChange(family){
+        this.selectedFamily = family
+        this.changeKanji(); //réactualise les cartes
+
+    },
        
     },
     async created() {
+      this.families = ["1","2","3","4","5","6","8"]//,"tous"] //familles de kanji proposées dans le select
       this.changeKanji()
     }
 }
@@ -126,7 +137,7 @@ Button {
 
 a {
     color: white;
-    margin-left: 45%;
+    margin-left: 1%;
     margin-top: 1%;
 
 }
@@ -164,6 +175,13 @@ a {
         left:95%;
         margin-top:1%;
         position:relative
+
+  }
+   Select {
+      position: relative;
+      margin-left: 43%;
+      width:3%;
+      min-width:40px;
 
     }
 </style>

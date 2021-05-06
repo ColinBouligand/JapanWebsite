@@ -21,6 +21,14 @@ const routes = [
         }
     },
     {
+        path: '',
+        name: 'Home',
+        component: Home,
+        meta : {
+            title: 'Accueil'
+        }
+    },
+    {
         path: '/home',
         name: 'Home',
         component: Home,
@@ -83,7 +91,7 @@ const routes = [
         component: NotFoundComponent
     }*/
     { 
-        path: '/:pathMatch(.*)', //regex qui remplace * de vue2
+        path: '/:pathMatch(.*)*', //regex qui remplace * de vue2
         name: 'bad-not-found',
         component: NotFoundComponent,
         meta : {

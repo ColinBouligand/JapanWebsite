@@ -84,6 +84,9 @@ export default {
                 console.log(this.kanjis1, this.kanjis2)
             });*/
             }
+            else if ((this.lastClicked[0] == kanji) && (this.lastClicked[1] == colonne)){
+                    return;
+            }
             else {
                 this.text = "perdu"
             }
