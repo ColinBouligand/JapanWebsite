@@ -12,7 +12,6 @@
     <transition name="toast">
     <Toast v-if="showToast" :text="trad.translatedText"  />
     </transition> 
-<button>Hihi</button>
 </template>
 
 <script>
@@ -64,28 +63,23 @@ export default {
 
       }, //récupère les traductions en français des traductions anglais d'un kanji // LIMITE DE TRADUCTION -> ne traduire que le premier mot (pas tous les sens)
       async getFrench() {
-	console.log("Yessai")
+
         //var trad = []
          // for(var w in words)
           //{
-//            const res = await fetch("https://libretranslate.com/translate", {
-  //        method: "POST", 
-    //        body: JSON.stringify({
-      //         // q: words[w],
-        //        q:words[0],
-          //      source: "en",
-            //    target: "fr"
-              //  }),
-          //  headers: { "Content-Type": "application/json" }
-          //  });
-            //console.log(await res.json())
-            //trad.push(await res.json())
-          //  return await res.json()
- const res = await fetch('http://2.56.212.232:5000')
-        const data = await res.json()
-	console.log(data)
-return data         // }
-          //return trad
+            const res = await fetch("https://libretranslate.com/translate", {
+          method: "POST", 
+            body: JSON.stringify({
+               // q: words[w],
+                q:words[0],
+                source: "en",
+                target: "fr"
+              }),
+            headers: { "Content-Type": "application/json" }
+            });
+            console.log(await res.json())
+            trad.push(await res.json())
+            return await res.json()
       },
     async changeKanji(){
         this.kanji = await this.fetchNKanjis(1)
