@@ -76,10 +76,10 @@ export default {
 <style scoped>
 
 .kanji {
-    width: 50%;
+    width: 40%;
     text-align: center;
     background :#FAF0CD;
-    margin-left: 22%;
+    margin-left: 27%;
     margin-top:7%;
     padding:3%;
 }

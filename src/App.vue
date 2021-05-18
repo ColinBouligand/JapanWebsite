@@ -1,35 +1,21 @@
 <template>
-<Navbar />
-<div class="container">
-
-
-<router-view ></router-view>
-<!--<Footer />-->
-
-</div>
-
+  <Navbar />
+  <router-view ></router-view>
 </template>
 
 <script>
 import Navbar from './components/Navbar'
-//import Footer from './components/Footer'
-
 
 export default {
   name: 'App',
   components: {
     Navbar,
-   // Footer
   },
   data() {
     return{
-    showAddTask: false,
     }
   },
   methods: {
-    toggleAddTask(){
-        this.showAddTask = !this.showAddTask
-      },
   }
 }
 </script>
