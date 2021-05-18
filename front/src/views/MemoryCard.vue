@@ -62,15 +62,12 @@ export default {
         return data
 
       }, //récupère les traductions en français des traductions anglais d'un kanji // LIMITE DE TRADUCTION -> ne traduire que le premier mot (pas tous les sens)
-      async getFrench() {
+      async getFrench(words) {
 
-        //var trad = []
-         // for(var w in words)
-          //{
-            const res = await fetch("https://libretranslate.com/translate", {
+
+        const res = await fetch("https://libretranslate.com/translate", {
           method: "POST", 
             body: JSON.stringify({
-               // q: words[w],
                 q:words[0],
                 source: "en",
                 target: "fr"
@@ -78,7 +75,6 @@ export default {
             headers: { "Content-Type": "application/json" }
             });
             console.log(await res.json())
-            trad.push(await res.json())
             return await res.json()
       },
     async changeKanji(){
