@@ -104,13 +104,13 @@ export default {
 }
 
 .verso {
-    padding-top: 1%!important; /* PREND LE PAS SUR LES AUTRES ENDROITS OU LA PROP EST DEFINIE AUSSI */
+    padding-top: 1%!important;                 /* PREND LE PAS SUR LES AUTRES ENDROITS OU LA PROP EST DEFINIE AUSSI */
     padding-bottom: 1%!important;
     background-color:#F5F5F5;
-    border: solid 3px black!important;
-
-    /*animation : clickedOn 1s*/
+    border: solid 3px black!important;  
 }
+
+  /*animation : clickedOn 1s*/
 /*
 @keyframes clickedOn {
     0% {width: 20%; background-color:#FAF0CD}

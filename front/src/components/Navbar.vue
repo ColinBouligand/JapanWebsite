@@ -4,6 +4,7 @@
       <a><router-link to="/drawing"><span>Atelier Dessin</span></router-link></a>    
       <a><router-link to="/flashCards"><span>FlashCards</span></router-link></a>
       <a><router-link to="/memoryCard"><span>MemoryCard</span></router-link></a>
+      <a><router-link to="/pictures"><span>PicturesGame</span></router-link></a>
       <a><router-link to="/search"><span>Trouver un Kanji</span></router-link></a>
       <a><router-link to="/about"><span>A propos</span></router-link></a>
 

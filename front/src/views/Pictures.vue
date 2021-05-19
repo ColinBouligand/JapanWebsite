@@ -2,29 +2,36 @@
 <img @click="openModal" class="logo_help" src="../assets/logo_help.png" alt="logo aide" />
 <Modal @close-modal="modalClosed" v-if="showModal" :text="textModal"/>
 
+<div  v-if="!noPhotos">
 <Select v-model="selectedFamily" :content="families" @select-change="selectChange"/>
     <a :href="getURlKanji()" >Détails</a>
     <Button @click="changeKanji();" text="Prochain Kanji" color="#F5F5F5"/>
-    <div class="card">
-        <Card :kanji="kanji"  />
+    <div  class="container">
+    <h1>{{kanji[0]}}</h1>
+    <img v-if="images[0]" :src="images[0]"  @click="clickImg" :alt="kanji[0]" >
+    <img v-if="images[1]" :src="images[1]"  @click="clickImg"  :alt="kanji[1]">
+    <img v-if="images[2]" :src="images[2]" @click="clickImg" :alt="kanji[2]" >
     </div>
-
+</div>
+<div v-if="noPhotos" class="container">
+        <p  >Veuillez nous excuser pour ce désagrément, cette page n'est pas disponible pour le moment, réessayez dans 1 h !</p>
+</div>
     <transition name="toast">
-    <Toast v-if="showToast" :text="trad.translatedText"  />
+    <Toast v-if="showToast" :text="textToast"  />
     </transition> 
 </template>
 
 <script>
-import Card from '../components/Card'
 import Button from '../components/button'
 import Toast from '../components/Toast'
 import Modal from '../components/Modal'
 import Select from '../components/Select'
+import { apiImgKey } from '../../api.js'
+
 
 export default {
-    name: 'MemoryCard',
+    name: 'Pictures',
     components: {
-        Card,
         Button,
         Toast,
         Modal,
@@ -33,11 +40,14 @@ export default {
      data() {
         return {
             kanji: [],
-            trad: "",
+            meanings:[],
+            images: [],
             showToast: false,
-            textModal: "Cette page est là pour vous aider à retenir les kanji. Elle vous permet de vous tester vous même sur votre connaissance de ces symboles. Vous pouvez ensuite vérifier votre réponse en passant le curseur sur la carte, ayant ainsi accès aux traductions anglaises (au verso) et française (venant d'en bas). Vous pouvez ensuite, soit passez à un autre kanji, soit accéder à la page du kanji via le lien 'détail'.",
+            textModal: "Cette page est là pour vous aider à associer un kanji à une idée, une image. On vous y propose un kanji et 3 images. Vous devez ensuite choisir quelle image représente le kanji. Parfois les 3 images ne correspondront peut-être pas au kanji, n'hésitez pas à passer au prochain !",
             showModal: false,
             selectedFamily:"1",
+            noPhotos: false,
+            textToast: ""
         }
     },
     methods: {
@@ -61,34 +71,43 @@ export default {
         const data = await res.json()
         return data
 
-      }, //récupère les traductions en français des traductions anglais d'un kanji // LIMITE DE TRADUCTION -> ne traduire que le premier mot (pas tous les sens)
-      async getFrench(words) {
-
-
-        const res = await fetch("https://libretranslate.com/translate", {
-          method: "POST", 
-            body: JSON.stringify({
-                q:words[0],
-                source: "en",
-                target: "fr"
-              }),
-            headers: { "Content-Type": "application/json" }
+      },  //récupère les traductions en français des traductions anglais d'un kanji // LIMITE DE TRADUCTION -> ne traduire que le premier mot (pas tous les sens)
+      async getImages(words,n) {
+        const res = await fetch("https://api.pexels.com/v1/search?query="+words[n].meanings[0], {
+          method: "GET", 
+          withCredentials: true,
+            headers: { "Authorization": apiImgKey,
+                        "Content-Type": "application/json"
+            }
             });
             return await res.json()
       },
     async changeKanji(){
-        this.kanji = await this.fetchNKanjis(1)
-        this.kanji = await this.getInfosKanji(this.kanji)
-        this.trad = await this.getFrench(this.kanji.meanings)
-        this.triggerToast()
-	console.log("change")
+        this.kanji = await this.fetchNKanjis(3)
+        console.log(this.kanji)
+        this.images = []
+        this.meanings= []
+        for(var i in this.kanji)
+        {
+            this.meanings.push(await this.getInfosKanji(this.kanji[i]))
+            this.images.push(await this.getImages(this.meanings,i))
+            if(this.images[i].photos)
+            {
+                this.images[i] = this.images[i].photos[0].src.tiny
+            }
+            else {
+                this.noPhotos = true
+            }
+        }
+        console.log(this.images)
     },
-    triggerToast(){
+    triggerToast(text){
         this.showToast = true;
+        this.textToast = text;
         setTimeout(() => this.showToast = false, 1000)
     },
     getURlKanji(){
-        return `${window.location.origin}/kanji/${this.kanji.kanji} `
+        return `${window.location.origin}/kanji/${this.kanji[0]} `
     },
     openModal(){
         this.showModal= ! this.showModal
@@ -101,6 +120,19 @@ export default {
         this.changeKanji(); //réactualise les cartes
 
     },
+    clickImg(img){
+        console.log(img.explicitOriginalTarget.getAttribute("alt"))
+        if(img.explicitOriginalTarget.getAttribute("alt") === this.kanji[0])
+        {   
+            console.log("gagné")
+            this.triggerToast("Gagné ! - "+ this.meanings[0].meanings[0]+" -")
+            this.changeKanji()
+        }
+        else {
+            console.log("perdu")
+            this.triggerToast("Perdu !")
+        }
+    }
        
     },
     async created() {
@@ -111,15 +143,11 @@ export default {
 </script>
 <style scoped>
 
-.card {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    height: 300px;
-    margin: -150px;
-    float: left;
-    perspective: 500px;
+
+.container {
+   width:80%;
+   margin-left:10%;
+   text-align: center;
 }
 
 Button {
@@ -172,9 +200,14 @@ a {
   }
    Select {
       position: relative;
-      margin-left: 43%;
+      margin-left: 41%;
       width:3%;
       min-width:40px;
 
+    }
+
+    img {
+        cursor:pointer;
+        margin: 1%;
     }
 </style>
