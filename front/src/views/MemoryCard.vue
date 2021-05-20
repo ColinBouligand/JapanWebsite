@@ -65,8 +65,9 @@ export default {
       async getFrench(words) {
 
 
-        const res = await fetch("https://libretranslate.com/translate", {
-          method: "POST", 
+	//        const res = await fetch("https://libretranslate.com/translate", {
+       const res = await fetch("http://2.56.212.232:5000", {
+   method: "POST", 
             body: JSON.stringify({
                 q:words[0],
                 source: "en",
@@ -74,7 +75,6 @@ export default {
               }),
             headers: { "Content-Type": "application/json" }
             });
-            console.log(await res.json())
             return await res.json()
       },
     async changeKanji(){

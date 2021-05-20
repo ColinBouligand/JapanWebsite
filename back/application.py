@@ -9,6 +9,6 @@ app = Flask(__name__)
 @cross_origin()
 def index():
     '''Index page route'''
-    a = {'1':'百', '2': '早', '3':'字' }
+    a = {'1':'雨', '2': '早', '3':'字' }
     return a
 
