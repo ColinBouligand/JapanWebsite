@@ -9,6 +9,7 @@
 
 <script>
 import Modal from '../components/Modal'
+import { apiSearchKey }  from '../../api.js'
 
 export default{
     name: 'search',
@@ -31,7 +32,7 @@ export default{
                 var req = unirest("GET", "https://kanjialive-api.p.rapidapi.com/api/public/search/"+this.search.toLowerCase());
 
                 req.headers({
-                    "x-rapidapi-key": "e704e96ba3msh916a6461e8774fep15a742jsndc5a3a965ea5",
+                    "x-rapidapi-key": apiSearchKey ,
                     "x-rapidapi-host": "kanjialive-api.p.rapidapi.com",
                     "useQueryString": true
                 });

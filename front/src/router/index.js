@@ -5,6 +5,7 @@ import Home from '../views/Home'
 import Drawing from '../views/Drawing'
 import About from '../views/About'
 import Kanji from '../views/Kanji'
+import Pictures from '../views/Pictures'
 import Search from '../views/Search'
 import NotFoundComponent from '../views/NotFoundComponent'
 
@@ -43,6 +44,14 @@ const routes = [
         component: FlashCards,
         meta : {
             title: 'Flashcards'
+        }
+    },
+    {
+        path: '/pictures',
+        name: 'Pictures',
+        component: Pictures,
+        meta : {
+            title: 'PicturesGame'
         }
     },
     {
