@@ -59,7 +59,7 @@ export default {
       async getKanji(kanjiDrawn){
         console.log(kanjiDrawn)
 	
-        const res = await fetch('http://2.56.212.232:5000?kanji='+kanjiDrawn[0])
+        const res = await fetch('http://2.56.212.232:5000?kanji='+kanjiDrawn.imgUrl)
         const data = await res.json()
         console.log(data) 
         this.kanjisAnswer = data

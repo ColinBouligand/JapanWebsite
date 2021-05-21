@@ -29,7 +29,7 @@ export default{
             {
                 var unirest = require("unirest");
 
-                var req = unirest("GET", "https://kanjialive-api.p.rapidapi.com/api/public/search/"+this.search);
+                var req = unirest("GET", "https://kanjialive-api.p.rapidapi.com/api/public/search/"+this.search.toLowerCase());
 
                 req.headers({
                     "x-rapidapi-key": apiSearchKey ,

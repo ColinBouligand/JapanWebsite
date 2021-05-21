@@ -127,11 +127,13 @@ export default{
         //Clic sur sauvegarder -> propose de télécharger l'image et l'enregistre dans la base
         saveDraw() {
             this.imgUrl= this.canvas.toDataURL( ) ; // This method saves graphics in png
-            var image = this.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-            var link = document.createElement('a');
-            link.download = "kanji.png";
-            link.href = image;
-            link.click();
+
+
+           // var image = this.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+           // var link = document.createElement('a');
+            //link.download = "kanji.png";
+            //link.href = image;
+            //link.click();
 
             //persistence données
             const kanjiDrawn = {

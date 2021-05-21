@@ -1,17 +1,23 @@
 #coding=utf8
 
+import os
+
 import torch
 import numpy as np
 
 import torch.nn as nn
 import torch.nn.functional as F
 
-from PIL import Image
+from PIL import Image, ImageFile
 import PIL.ImageOps
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-from flask import Flask
+from flask import Flask, request
 from flask_cors import cross_origin
 import json
+
+import base64
+from io import BytesIO,StringIO
 
 
 def format_and_resize(get_path, set_path):
@@ -43,12 +49,13 @@ def get_x_best_outputs(outputs, x):
         output_preds.append(lst[i][1])
     hiragana_classes = [ "ぁ", "ぃ", "ぅ", "ぇ", "ぉ", "か", "が", "き", "ぎ", "く", "ぐ", "け", "げ", "こ", "ご", "さ", "ざ", "し", "じ", "す", "ず", "せ", "ぜ", "そ", "ぞ", "た", "だ", "ち", "ぢ", "つ", "づ", "て", "で", "と", "ど", "な", "に", "ぬ", "ね", "の", "は", "ば", "ぱ", "ひ", "び", "ぴ", "ふ", "ぶ", "ぷ", "へ", "べ", "ぺ", "ほ", "ぼ", "ぽ", "ま", "み", "む", "め", "も", "や", "ゆ", "よ", "ら", "り", "る", "れ", "ろ", "ゎ", "を", "ん" ]
     output_preds_hira = {}
+    print(output_preds)
     for i in range(0, len(output_preds)):
-        output_preds_hira[str(i)] = hiragana_classes[i]
+        output_preds_hira[str(i)] = hiragana_classes[output_preds[i]]
     return output_preds_hira
 
 
-def pred_img(path, x):
+def pred_img(path, x, net):
     img = png_to_tensor(path)
     pred_output = net(img)
     return get_x_best_outputs(pred_output, x)
@@ -76,20 +83,45 @@ class Net(nn.Module):
         return x
 
 
+
+
 app = Flask(__name__)
+
+
 
 @app.route('/')
 @cross_origin()
 def index():
+    return pred()
+
+
+def pred():
+    try:
+        open('base64text.txt', 'w').close()
+        os.remove("kanji.png")
+        os.remove("kanji_valide.png")
+    except:
+        pass
     net = Net()
     PATH = './kanji-cnn-weighted-model.pth'
     net.load_state_dict(torch.load(PATH))
-    format_and_resize('lien_vers_kanji.png', 'kanji_valide.png')
-    pred_png = pred_img('kanji_valide.png', 5)
-    return pred_png
+    
+    kanji = request.args.get('kanji')
+    print(len(kanji))
+    kanji = (kanji + "=" * ((4 - len(kanji) % 4) % 4))
+    print(len(kanji))
+    f= open("base64text.txt","w+")
+    
+    f.write(kanji[22:])
+    f.close()
 
-"""def index():
-    '''Index page route'''
-    a = {'1':'百', '2': '早', '3':'字' }
-    return a"""
+    f1 = open('base64text.txt', 'r')
+    data = f1.read()
+    f1.closed
+
+    im = Image.open(BytesIO(base64.b64decode(data)))
+    im.save('kanji.png', 'PNG')
+    format_and_resize('kanji.png', 'kanji_valide.png')
+    pred_png = pred_img('kanji_valide.png', 5, net)
+    return pred_png
 
