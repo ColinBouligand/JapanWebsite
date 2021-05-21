@@ -1,7 +1,6 @@
 <template>
 
-<img @click="openModal" class="logo_help" src="../assets/logo_help.png" alt="logo aide" />
-<Modal @close-modal="modalClosed" v-if="showModal" :text="textModal"/>
+<Help :textModal="textModal" />
 <Button @click="changeTraining()" :text="training ? 'Dessin':'Entrainement'" color="Orange"/>
 <Select v-if="training && kanjisSelect" :content="kanjisSelect" @select-change="selectChange"/>
 <Header  title="Atelier Dessin" />
@@ -19,12 +18,11 @@
 
 <script>
 
-//import Drawings from '../components/Drawings'
 import Header from '../components/header'
 import Canvas from '../components/Canvas'
 import Button from '../components/button'
 import Select from '../components/Select'
-import Modal from '../components/Modal'
+import Help from '../components/Help'
 import KanjiList from '../components/KanjiList'
 
 
@@ -40,7 +38,7 @@ export default {
         Canvas,
         Button,
         Select,
-        Modal,
+        Help,
         KanjiList,
     },
     data() {
@@ -50,7 +48,6 @@ export default {
         training: false,
         kanji: "",
         textModal: "Cette page est dédiée au tracé des kanji. Elle est composée de 2 parties. La première vous permet de dessiner un kanji que vous ne connaissez pas et d'accéder à ses informations. La deuxième partie, accessible via le bouton 'entrainement' vous permet de vous entrainer au tracé des kanji en choisissant un modèle.",
-        showModal: false,
         kanjisAnswer : []
 
         }
@@ -81,12 +78,7 @@ export default {
         this.$forceUpdate();
 
       },
-      openModal(){
-          this.showModal= ! this.showModal
-      },
-      modalClosed(){
-          this.showModal=false
-      },
+      
       
 
   },

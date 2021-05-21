@@ -39,8 +39,8 @@ export default{
         document.body.style.margin = 0;
         this.canvas.style.position = 'relative'; // à garder fixed, sinon getBoundingClientRect() ne renvoie pas de ????? -> ne fonctionne que en plein écran :'(
         this.canvas.style.border ='solid black 1px';
-        this.canvas.style.width='30%';  
-        this.canvas.style.height='60%';
+        this.canvas.style.width='200px';  
+        this.canvas.style.height='200px';
         this.canvas.width  = this.canvas.offsetWidth;
         this.canvas.height = this.canvas.offsetHeight; // A RESOLU MON PROBLEME DE TRAIT DECALE !
 
@@ -98,7 +98,7 @@ export default{
 
             ctx.beginPath(); 
 
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 8;
             ctx.lineCap = 'round';
             ctx.strokeStyle = colorLocal //noir si pas de kanji en dessous !
 
@@ -126,6 +126,7 @@ export default{
         },
         //Clic sur sauvegarder -> propose de télécharger l'image et l'enregistre dans la base
         saveDraw() {
+            console.log("save")
             this.imgUrl= this.canvas.toDataURL( ) ; // This method saves graphics in png
 
 

@@ -1,27 +1,26 @@
 <template>
-<img @click="openModal" class="logo_help" src="../assets/logo_help.png" alt="logo aide" />
-<Modal @close-modal="modalClosed" v-if="showModal" :text="textModal"/>
+<Help :textModal="textModal" />
+
     <div class="search-container">
             <h2>Chercher un kanji (en anglais)</h2>
             <input v-model="search" class="search-bar" type="text" @change="searchForKanji">
+            <p v-if="search"> Appuyer sur "Entrée" pour lancer la recherche ! </p>
     </div>
 </template>
 
 <script>
-import Modal from '../components/Modal'
+import Help from '../components/Help'
 import { apiSearchKey }  from '../../api.js'
 
 export default{
     name: 'search',
     components: {
-        Modal
+        Help
     },
     data() {
         return {
             search: "",
             textModal: "Cette page vous permet d'accéder aux informations d'un kanji juste en rentrant son nom en anglais et en appuyant sur 'Entrée'.",
-            showModal: false,
-
         }
     },
     methods :{
@@ -49,12 +48,6 @@ export default{
                 });
 
             },
-            openModal(){
-                this.showModal= ! this.showModal
-            },
-            modalClosed(){
-                this.showModal=false
-            },
     }
 }
 
@@ -72,12 +65,4 @@ export default{
 .search-bar {
     margin-top:2%;
 }
-.logo_help {
-        width:3%;
-        min-width:35px;
-        left:95%;
-        margin-top:1%;
-        position:relative
-
-    }
 </style>

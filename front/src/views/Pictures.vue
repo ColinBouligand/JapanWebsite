@@ -1,7 +1,5 @@
 <template>
-<img @click="openModal" class="logo_help" src="../assets/logo_help.png" alt="logo aide" />
-<Modal @close-modal="modalClosed" v-if="showModal" :text="textModal"/>
-
+<Help :textModal="textModal" />
 <div  v-if="!noPhotos">
 <Select v-model="selectedFamily" :content="families" @select-change="selectChange"/>
     <a :href="getURlKanji()" >Détails</a>
@@ -24,7 +22,7 @@
 <script>
 import Button from '../components/button'
 import Toast from '../components/Toast'
-import Modal from '../components/Modal'
+import Help from '../components/Help'
 import Select from '../components/Select'
 import { apiImgKey } from '../../api.js'
 
@@ -34,7 +32,7 @@ export default {
     components: {
         Button,
         Toast,
-        Modal,
+        Help,
         Select,
     },
      data() {
@@ -45,7 +43,6 @@ export default {
             kanjiToFind: "",
             showToast: false,
             textModal: "Cette page est là pour vous aider à associer un kanji à une idée, une image. On vous y propose un kanji et 3 images. Vous devez ensuite choisir quelle image représente le kanji. Vous avez accès au sens des images en passant votre souris par-dessus. Parfois certains kanji n'ont pas d'images, nous nous en excusons.",
-            showModal: false,
             selectedFamily:"1",
             noPhotos: false,
             textToast: ""
@@ -136,12 +133,6 @@ export default {
     getURlKanji(){
         return `${window.location.origin}/kanji/${this.kanji[0]} `
     },
-    openModal(){
-        this.showModal= ! this.showModal
-    },
-    modalClosed(){
-        this.showModal=false
-    },   
     selectChange(family){
         this.selectedFamily = family
         this.changeKanji(); //réactualise les cartes
@@ -218,23 +209,13 @@ a {
 .toast-leave-active {
     transition: all 0.3s ease;
 }
-
-.logo_help {
-        width:3%;
-        min-width:35px;
-        left:95%;
-        margin-top:1%;
-        position:relative
-
-  }
-   Select {
+ Select {
       position: relative;
-      margin-left: 41%;
+      margin-left: 45%;
       width:3%;
       min-width:40px;
 
     }
-
     img {
         cursor:pointer;
         margin: 1%;

@@ -40,5 +40,9 @@ export default {
    padding: 10px;
    border-radius:  25% 10%;
 }
+h3, Button {
+    margin-left: 35%;
+}
+
 
 </style>
