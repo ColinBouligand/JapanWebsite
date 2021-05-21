@@ -63,8 +63,6 @@ export default {
 
       }, //récupère les traductions en français des traductions anglais d'un kanji // LIMITE DE TRADUCTION -> ne traduire que le premier mot (pas tous les sens)
       async getFrench(words) {
-
-
         const res = await fetch("https://libretranslate.com/translate", {
           method: "POST", 
             body: JSON.stringify({

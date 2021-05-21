@@ -7,10 +7,10 @@
     <a :href="getURlKanji()" >Détails</a>
     <Button @click="changeKanji();" text="Prochain Kanji" color="#F5F5F5"/>
     <div  class="container">
-    <h1>{{kanji[0]}}</h1>
-    <img v-if="images[0]" :src="images[0]"  @click="clickImg" :alt="kanji[0]" >
-    <img v-if="images[1]" :src="images[1]"  @click="clickImg"  :alt="kanji[1]">
-    <img v-if="images[2]" :src="images[2]" @click="clickImg" :alt="kanji[2]" >
+    <h1 id="kanjiImage">{{kanjiToFind}}</h1>
+    <img v-if="images[0]" :src="images[0]"  @click="clickImg" data-id="1" :alt="kanji[0]" :title="meanings[0].meanings[0]" >
+    <img v-if="images[1]" :src="images[1]"  @click="clickImg" data-id="2" :alt="kanji[1]" :title="meanings[1].meanings[0]" >
+    <img v-if="images[2]" :src="images[2]" @click="clickImg" data-id="3" :alt="kanji[2]" :title="meanings[2].meanings[0]" >
     </div>
 </div>
 <div v-if="noPhotos" class="container">
@@ -42,8 +42,9 @@ export default {
             kanji: [],
             meanings:[],
             images: [],
+            kanjiToFind: "",
             showToast: false,
-            textModal: "Cette page est là pour vous aider à associer un kanji à une idée, une image. On vous y propose un kanji et 3 images. Vous devez ensuite choisir quelle image représente le kanji. Parfois les 3 images ne correspondront peut-être pas au kanji, n'hésitez pas à passer au prochain !",
+            textModal: "Cette page est là pour vous aider à associer un kanji à une idée, une image. On vous y propose un kanji et 3 images. Vous devez ensuite choisir quelle image représente le kanji. Vous avez accès au sens des images en passant votre souris par-dessus. Parfois certains kanji n'ont pas d'images, nous nous en excusons.",
             showModal: false,
             selectedFamily:"1",
             noPhotos: false,
@@ -85,8 +86,11 @@ export default {
     async changeKanji(){
         this.kanji = await this.fetchNKanjis(3)
         console.log(this.kanji)
+        this.kanjiToFind = this.kanji[0]
         this.images = []
         this.meanings= []
+        this.kanji = await this.shuffle(this.kanji)
+        console.log(this.kanji)
         for(var i in this.kanji)
         {
             this.meanings.push(await this.getInfosKanji(this.kanji[i]))
@@ -99,7 +103,30 @@ export default {
                 this.noPhotos = true
             }
         }
-        console.log(this.images)
+
+    },
+    async shuffle(list)
+      {
+        var nouvelleList = [];
+        var indiceList = []
+        var j, x, i;
+
+        for(i =0; i < list.length; i++)
+        {
+            indiceList.push(i)
+        }
+        for (i = list.length - 1; i > 0; i--) {
+            
+            j = Math.floor(Math.random() * (i + 1));
+            x = indiceList[i];
+            indiceList[i] = indiceList[j];
+            indiceList[j] = x;
+        }
+        for(i =0; i < list.length; i++)
+        {
+            nouvelleList.push(list[indiceList[i]])
+        }
+        return nouvelleList;
     },
     triggerToast(text){
         this.showToast = true;
@@ -122,10 +149,12 @@ export default {
     },
     clickImg(img){
         console.log(img.explicitOriginalTarget.getAttribute("alt"))
-        if(img.explicitOriginalTarget.getAttribute("alt") === this.kanji[0])
+        console.log(document.getElementById("kanjiImage").innerHTML)
+        if(img.explicitOriginalTarget.getAttribute("alt") === document.getElementById("kanjiImage").innerHTML)
         {   
             console.log("gagné")
-            this.triggerToast("Gagné ! - "+ this.meanings[0].meanings[0]+" -")
+            var id = img.explicitOriginalTarget.getAttribute("data-id")
+            this.triggerToast("Gagné ! - "+ this.meanings[id-1].meanings[0]+" -")
             this.changeKanji()
         }
         else {
@@ -210,4 +239,22 @@ a {
         cursor:pointer;
         margin: 1%;
     }
+
+    img:hover {
+        border : 1px solid black;
+        position : relative
+    }
+    /* Effet pour afficher le nom anglais de l'image en hover */
+    img[title]:hover:after {
+        content: attr(title);
+        padding: 4px 8px;
+        color: rgba(0,0,0,0.5);
+        position: relative;
+        left: 50%;
+        top: 50%;
+        white-space: nowrap;
+        z-index: 1000;
+        border-radius: 5px ;
+        background: rgba(0,0,0,0.5);
+}
 </style>
