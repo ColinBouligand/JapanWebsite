@@ -1,7 +1,6 @@
 <template>
-<!--  v-on: == @  -->
     <button @click="onClick()"
-    :style="{background: color}" class="btn">{{text}}
+    :style="{background: color, color: textColor}" class="btn">{{text}}
     </button> 
 </template>
 
@@ -12,13 +11,13 @@ export default{
     props:{
         text: String,
         color: String,
+        textColor: String,
     },
     methods: {
         onClick() {
             this.$emit('btn-click')
         }
     }
-
 }
 
 </script>
@@ -34,5 +33,7 @@ export default{
   text-decoration: none;
   font-size: 15px;
   font-family: inherit;
+  font-weight: bold;
+
 }
 </style>

@@ -1,12 +1,10 @@
 <template>
     <h2 v-if="training" >Entrainement</h2>
     <canvas id="canvas"></canvas>
-    <input type="color" id="colorpicker">
-    <Button @click="eraseDraw()" text="Réinitialiser" color="blue"/>
-    <Button v-if="!training" @click="saveDraw()" text="Sauvegarder" color="green"/>
+   <!-- <input type="color" id="colorpicker"> -->
+    <Button @click="eraseDraw()" text="Réinitialiser"  color="black" textColor="white"/>
+    <Button v-if="!training" @click="saveDraw()" text="Rechercher"  color="black" textColor="white"/>
     <img id="imageKanji" src="../assets/kanji.png">
-
-   <!-- <img src="../assets/paintbrush.svg" alt="" style="width:100px; height:100px"/> -->
 
 </template>
 
@@ -60,20 +58,16 @@ export default{
         const canvas = this.canvas
         const ctx= this.ctx
 
-        var colorLocal = ""
+        var colorLocal = "black"
 
-        //récupération de la couleur
-        const colorPicker = document.getElementById('colorpicker')
+        //récupération de la couleur A DECOMMENTER SI BESOIN DE CHANGER LA COULEUR
+        /*const colorPicker = document.getElementById('colorpicker')
         colorPicker.addEventListener('input', function(){
             colorLocal = colorPicker.value
-        });
+        });*/
         
 
         this.eraseDraw()
-            //const img = document.getElementById('imageKanji')
-            //this.ctx.drawImage(img,1,1)
-   
-
 
         // last known position
         var pos = { x: 0, y: 0 };
@@ -146,12 +140,12 @@ export default{
             //document.getElementById('cimg').src = imgurl; // This will set img src to dataurl(png) so that it can be saved as image.
         },
         drawKanjiTraining(kanji){
-            this.ctx.lineWidth = 3;
+            this.ctx.lineWidth = 2;
             this.ctx.lineCap = 'round';
             this.ctx.strokeStyle = 'black'; //noir si pas de kanji en dessous !
             this.ctx.font = "100px sans-serif";
             //this.ctx.fillText(kanji, 60, 100);
-            this.ctx.strokeText(kanji, 60, 100);
+            this.ctx.strokeText(kanji, 50, 130);
         }
     },
     watch : {
@@ -182,7 +176,6 @@ export default{
  }
 
  Button {
-    width:50%;
     margin:5px;
 
  }

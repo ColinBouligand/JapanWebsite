@@ -2,8 +2,8 @@
 <Help :textModal="textModal" />
 
     <div class="search-container">
-            <h2>Chercher un kanji (en anglais)</h2>
-            <input v-model="search" class="search-bar" type="text" @change="searchForKanji">
+            <h1>CHERCHER UN KANJI (en anglais)</h1>
+            <input v-model="search" class="search-bar" type="text" @change="searchForKanji" placeholder="Search ...">
             <p v-if="search"> Appuyer sur "Entrée" pour lancer la recherche ! </p>
     </div>
 </template>
@@ -64,5 +64,23 @@ export default{
 }
 .search-bar {
     margin-top:2%;
+    color: #db5249;
+    width: 130px;
+    box-sizing: border-box;
+    border: 2px solid #9b2d23;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #faf0cd;
+    background-image: url('../assets/loupe.png');
+    background-size: 24px 24px;
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+}
+
+h1,p {
+    color: #faf0cd;
+    font-weight: bold;
+    margin-top: 1%;
 }
 </style>

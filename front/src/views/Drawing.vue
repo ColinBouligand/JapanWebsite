@@ -1,16 +1,16 @@
 <template>
 
 <Help :textModal="textModal" />
-<Button @click="changeTraining()" :text="training ? 'Dessin':'Entrainement'" color="Orange"/>
+<Button @click="changeTraining()" :text="training ? 'Dessin':'Entrainement'" color="black" textColor="white" />
 <Select v-if="training && kanjisSelect" :content="kanjisSelect" @select-change="selectChange"/>
-<Header  title="Atelier Dessin" />
-
+<div class="container_all">
 <div id="canvas-container">
   
     <Canvas :training="training" @get-kanji="getKanji" :kanji="kanji"/>
 </div>
 
-<KanjiList :kanjis="kanjisAnswer"/>
+<KanjiList v-if="kanjisAnswer && !training" :kanjis="kanjisAnswer"/>
+</div>
  
 
 
@@ -18,7 +18,6 @@
 
 <script>
 
-import Header from '../components/header'
 import Canvas from '../components/Canvas'
 import Button from '../components/button'
 import Select from '../components/Select'
@@ -33,8 +32,6 @@ export default {
     props:{
     },
     components: {
-      //  Drawings,
-        Header,
         Canvas,
         Button,
         Select,
@@ -84,6 +81,7 @@ export default {
   },
   async created() {
     this.kanjisSelect = await this.fetchKanjisSelect()
+    this.kanjisAnswer= []
     console.log(this.kanjisSelect)
   },
   computed : {
@@ -101,6 +99,9 @@ export default {
 
 <style scoped>
 
+* {
+     font-weight: bold;
+}
     Header{
        position: relative;
         margin-left: 10%;
@@ -110,27 +111,36 @@ export default {
     #canvas-container {
       display:flex;
       flex-direction: column;
-      width:50%;
+      width:25%;
       position:relative;
-      margin-left:25%;
+      margin-left:10%;
       align-items:center;
       min-width:150px;
       min-height:100px;
+      margin-top:5%;
 
     }
     Select {
       position: relative;
-      margin-left: 40%;
+      margin-left: 9%;
       width:3%;
       min-width:40px;
 
     }
-    .logo_help {
-        width:3%;
-        min-width:35px;
-        left:95%;
-        margin-top:1%;
-        position:relative
 
+    Button {
+      min-width: 130px;
     }
+
+    .container_all {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
+
+    KanjiList{
+      width: 60%;
+    }
+
+ 
 </style>

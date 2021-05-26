@@ -6,9 +6,9 @@
     <Button @click="changeKanji();" text="Prochain Kanji" color="#F5F5F5"/>
     <div  class="container">
     <h1 id="kanjiImage">{{kanjiToFind}}</h1>
-    <img v-if="images[0]" :src="images[0]"  @click="clickImg" data-id="1" :alt="kanji[0]" :title="meanings[0].meanings[0]" >
-    <img v-if="images[1]" :src="images[1]"  @click="clickImg" data-id="2" :alt="kanji[1]" :title="meanings[1].meanings[0]" >
-    <img v-if="images[2]" :src="images[2]" @click="clickImg" data-id="3" :alt="kanji[2]" :title="meanings[2].meanings[0]" >
+    <img v-if="images[0]" :src="images[0]"  @click="clickImg" data-id="1" :data="kanji[0]"  :alt="meanings[0].meanings[0]" :title="meanings[0].meanings[0]" >
+    <img v-if="images[1]" :src="images[1]"  @click="clickImg" data-id="2" :data="kanji[1]" :alt="meanings[1].meanings[0]" :title="meanings[1].meanings[0]" >
+    <img v-if="images[2]" :src="images[2]" @click="clickImg" data-id="3" :data="kanji[2]" :alt="meanings[2].meanings[0]" :title="meanings[2].meanings[0]" >
     </div>
 </div>
 <div v-if="noPhotos" class="container">
@@ -141,7 +141,7 @@ export default {
     clickImg(img){
         console.log(img.explicitOriginalTarget.getAttribute("alt"))
         console.log(document.getElementById("kanjiImage").innerHTML)
-        if(img.explicitOriginalTarget.getAttribute("alt") === document.getElementById("kanjiImage").innerHTML)
+        if(img.explicitOriginalTarget.getAttribute("data") === document.getElementById("kanjiImage").innerHTML)
         {   
             console.log("gagné")
             var id = img.explicitOriginalTarget.getAttribute("data-id")
@@ -211,7 +211,7 @@ a {
 }
  Select {
       position: relative;
-      margin-left: 45%;
+      margin-left: 46%;
       width:3%;
       min-width:40px;
 

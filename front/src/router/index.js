@@ -10,24 +10,17 @@ import Search from '../views/Search'
 import NotFoundComponent from '../views/NotFoundComponent'
 
 
-
-
 const routes = [
     {
-        path: '/',
-        name: 'Home',
-        component: Home,
-        meta : {
-            title: 'Accueil'
-        }
-    },
-    {
         path: '',
-        name: 'Home',
-        component: Home,
-        meta : {
-            title: 'Accueil'
+        redirect: {
+            name: 'Home',
+            component: Home,
+            meta : {
+                title: 'Accueil'
+            }
         }
+        
     },
     {
         path: '/home',
@@ -94,11 +87,6 @@ const routes = [
             title: 'A propos'
         }
     },
-    /*{
-        path: '*', 
-        name : 'Error 404',        
-        component: NotFoundComponent
-    }*/
     { 
         path: '/:pathMatch(.*)*', //regex qui remplace * de vue2
         name: 'bad-not-found',

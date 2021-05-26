@@ -71,10 +71,7 @@ export default {
         {
             this.minSize=true;
 
-        }
-
-        //if(this.content[this.column][0].length > 8)
-        
+        }        
     
     },watch:
     {
@@ -90,8 +87,6 @@ export default {
     emits: ['turn-card'],
     computed: {
 
-            //clicked: function() {return false;},
-            //correct: function() {return false}
     }
 }
 </script>
@@ -104,10 +99,8 @@ export default {
 }
 
 .verso {
-    padding-top: 1%!important;                 /* PREND LE PAS SUR LES AUTRES ENDROITS OU LA PROP EST DEFINIE AUSSI */
-    padding-bottom: 1%!important;
-    background-color:#F5F5F5;
-    border: solid 3px black!important;  
+    background: #9B2D23!important;
+    color: #FAF0CD!important;
 }
 
   /*animation : clickedOn 1s*/

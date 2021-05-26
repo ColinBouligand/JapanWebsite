@@ -12,17 +12,44 @@
     </nav>
 </template>
 
+<script>
+
+export default {
+    methods :{
+        getUrl(){
+            console.log(window.location.pathname);
+        }
+    },
+    created(){  
+        this.getUrl()
+
+        var links = document.getElementsByTagName("a")
+        console.log(links)
+        var hrefs = Array.from(links).map(link => {
+           return link.href
+        })
+
+        console.log(hrefs)
+
+    }
+
+}
+</script>
+
+
 <style  scoped>
 
 nav {
-    background-color: #222; 
+    background-color: rgb(34,34,34); 
+    height: 65px;
 }
 img {
-    width: 60px;
-    height: 60px;
+    width: 65px;
+    height: 65px;
+    float : left;
 }
 a {
-    margin-right: 3%;
+    margin-right: 1%;
  
 }
 /* Supprime la barre sous les liens */
@@ -35,12 +62,15 @@ a:hover { text-decoration: none; }
 a:active { text-decoration: none; }
 
 span:hover {
-          color: #ea4f4c;
+  background-image: linear-gradient(to top, rgb(235,210,205), rgb(250,240,205), rgb(235,210,205));
+  color: black
 }
+span:hover img {opacity: 0.5;}
 
 
 span {
-    margin-bottom: 15px;
+    float:left;
+    padding: 23px;
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
     color: white;

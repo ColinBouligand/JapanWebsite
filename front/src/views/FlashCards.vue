@@ -97,8 +97,6 @@ export default {
           else{
               this.lastClicked= kanji + colonne
               this.allTurned= false
-              //console.log("kanji", this.lastClicked[0])
-              //console.log("2", this.lastClicked)
           }
       },
     async remove(list, kanji)
@@ -122,8 +120,6 @@ export default {
             const res = await fetch('https://kanjiapi.dev/v1/kanji/all')
             const data = await res.json()
             return data
-
-
         }   
         else{
             const res = await fetch('https://kanjiapi.dev/v1/kanji/grade-'+family)
@@ -144,13 +140,13 @@ export default {
         
         return result
       }, // récupère les informations du kanji passé en paramètre
-      async getInfosKanji(kanji){
+    async getInfosKanji(kanji){
         const res = await fetch('https://kanjiapi.dev/v1/kanji/'+kanji)
         const data = await res.json()
         return data
 
       },
-      async initialize(){
+    async initialize(){
           console.log("initialize")
         this.kanjis1= this.kanjis2=null
         this.temp = await this.fetchNKanjis(5,this.selectedFamily) // temp permet de laisser kanjis à undefined tant que toutes les données ne sont pas chargées -> ne charge pas les composants enfants sans les données
@@ -215,9 +211,10 @@ export default {
 <style scoped>
 
 .flashcard {
+    width:100%;
     display:flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 /* animation toast */
@@ -247,12 +244,6 @@ export default {
     transition: all 0.3s ease;
 }
 
- Select {
-      position: relative;
-      margin-left: 43%;
-      width:3%;
-      min-width:40px;
 
-    }
 
 </style>

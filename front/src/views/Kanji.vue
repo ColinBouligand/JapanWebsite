@@ -8,6 +8,10 @@
         <p> Lectures(s) ON : <br>  <strong>{{ readings_on }}</strong></p>
        </div> 
 
+      <div v-if="!kanjiInfo">
+          Le caractère recherché n'est pas un kanji
+          </div> 
+
 
 </template>
 
@@ -15,7 +19,7 @@
 
 
 export default {
-    name: 'MemoryCard',
+    name: 'Kanji',
     components: {
     },
      data() {
@@ -34,7 +38,6 @@ export default {
     },
     async created() {
         this.kanjiInfo = await this.getInfosKanji(this.$route.params.kanji)
-        console.log(this.kanjiInfo)
     },
     computed :{
         readings_kun() {
@@ -82,10 +85,12 @@ export default {
     margin-left: 22%;
     margin-top:7%;
     padding:3%;
+    border-radius: 2%;
 }
 
 p {
     font-size:150%;
+    font-weight: bold;
 }
 
 </style>

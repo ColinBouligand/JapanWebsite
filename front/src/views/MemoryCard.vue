@@ -10,7 +10,7 @@
     </div>
 
     <transition name="toast">
-    <Toast v-if="showToast" :text="trad.translatedText"  />
+    <Toast v-if="showToast && trad" :text="trad.translatedText"  />
     </transition> 
 </template>
 
@@ -77,8 +77,9 @@ export default {
         this.kanji = await this.fetchNKanjis(1)
         this.kanji = await this.getInfosKanji(this.kanji)
         this.trad = await this.getFrench(this.kanji.meanings)
-        this.triggerToast()
-	console.log("change")
+        if(!this.trad["error"]) {
+            this.triggerToast()
+        }
     },
     triggerToast(){
         this.showToast = true;
@@ -153,12 +154,4 @@ a {
     transition: all 0.3s ease;
 }
 
-
-   Select {
-      position: relative;
-      margin-left: 43%;
-      width:3%;
-      min-width:40px;
-
-    }
 </style>

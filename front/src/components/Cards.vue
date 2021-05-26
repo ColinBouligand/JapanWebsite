@@ -31,19 +31,10 @@
             }
         },
         async created() {
-            //console.log(this.allRecto)    
-            //this.$forceUpdate()         
+     
         },
         setup : () => {
-            //const flashcard = 
-            //return flashcard
-        },
-        watch:
-        {
-            allRecto()
-            {
-                //console.log("RECTO" , this.allRecto)
-            }
+
         }
     }
 </script>
@@ -66,16 +57,12 @@
      color:#9B2D23;
      padding:0;
      width:20%;
-     height:15%;
-     margin-left:25%; 
+     height:67px;
+     margin-left:35%; 
      margin-top: 3%;
      cursor:pointer;
+     font-weight: bold;
+}
 
-}
-/*
-.card:hover {
-    border: solid 3px black;
-}
-*/
 
 </style>
