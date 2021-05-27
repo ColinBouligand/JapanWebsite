@@ -1,14 +1,18 @@
 <template>
 <Help :textModal="textModal" />
 
-
-<Select v-model="selectedFamily" :content="families" @select-change="selectChange"/>
+<div class="container1">
+    <div class="container2">
+        <div class="select"> <h2>Niveau de difficulté : </h2> <Select v-model="selectedFamily" :content="families" @select-change="selectChange"/></div>
+ 
     <a :href="getURlKanji()" >Détails</a>
     <Button @click="changeKanji();" text="Prochain Kanji" color="#F5F5F5"/>
+
+</div>
     <div class="card">
         <Card :kanji="kanji"  />
     </div>
-
+</div>
     <transition name="toast">
     <Toast v-if="showToast && trad" :text="trad.translatedText"  />
     </transition> 
@@ -103,10 +107,33 @@ export default {
 </script>
 <style scoped>
 
+.select {
+    display :flex;
+    width: 30%;
+    justify-content: space-around;
+}
+
+
+.container1 {
+    display: flex;
+    flex-direction:row;
+    width: 100%;
+    justify-content: center;
+
+}
+
+.container2 {
+    display: flex;
+    width: 80%;
+    flex-direction: row;
+    justify-content: space-around;
+    
+}
+
 .card {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 58%;
     width: 300px;
     height: 300px;
     margin: -150px;
@@ -116,15 +143,14 @@ export default {
 
 Button {
     color:black;
-    margin-left:45%;
-    margin-top: 4%;
+    width: 150px;
 }
 
 a {
     color: white;
-    margin-left: 1%;
-    margin-top: 1%;
-
+    text-decoration:none;
+    font-weight: bold;
+    font-size: 30px;
 }
 
 /* animation toast */

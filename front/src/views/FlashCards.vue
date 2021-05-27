@@ -1,7 +1,7 @@
 <template>
 <Help :textModal="textModal" />
 
-    <Select v-model="selectedFamily" :content="families" @select-change="selectChange"/>
+        <div class="select"> <h2>Niveau de difficulté : </h2> <Select v-model="selectedFamily" :content="families" @select-change="selectChange"/></div>
 
 <div class="flashcard">
     <Cards @turn-card="turnCard" v-if="kanjisv1" :content="kanjisv1" column="kanji" fontSize="50px" num="1" :allRecto="allTurned"/>
@@ -84,6 +84,8 @@ export default {
             });*/
             }
             else if ((this.lastClicked[0] == kanji) && (this.lastClicked[1] == colonne)){
+                this.allTurned = true
+                this.lastClicked= ""
                     return;
             }
             else {
@@ -92,7 +94,6 @@ export default {
             this.lastClicked= ""
             this.triggerToast()
             this.allTurned = true
-            //console.log("changement")
          }
           else{
               this.lastClicked= kanji + colonne
@@ -158,7 +159,6 @@ export default {
         //mélanger la liste
         this.kanjis1= this.temp    
         this.kanjis2 = await this.shuffle(this.kanjis1)
-        this.families = ["1","2","3","4","5","6","8"]//,"tous"] //familles de kanji proposées dans le select
         //all comporte des kanji non traduits -> peut-être à enlever
       },
       triggerToast(){
@@ -196,6 +196,7 @@ export default {
         }
     },
     async created() {
+        this.families = ["1","2","3","4","5","6","8"]//,"tous"] //familles de kanji proposées dans le select
         this.initialize()
     },
     computed: {
@@ -216,6 +217,12 @@ export default {
     flex-direction: row;
     justify-content: space-around;
 }
+
+.select {
+    display :flex;
+    width: 90%;
+    justify-content: center;
+    }
 
 /* animation toast */
 .toast-enter-from {

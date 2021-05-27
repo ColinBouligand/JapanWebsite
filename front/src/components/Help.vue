@@ -13,6 +13,7 @@ export default({
     },
     props: {
         textModal: String,
+        home: Boolean,
     },
     data(){
         return {
@@ -27,6 +28,12 @@ export default({
           this.showModal=false
       },
     },
+    created(){
+        if(this.home) 
+        {
+             setTimeout(() => {this.showModal = true; }, 4000); 
+        }
+    }
 })
 </script>
 

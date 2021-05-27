@@ -1,5 +1,5 @@
 <template>
-<Help :textModal="textModal" />
+<Help :textModal="textModal" home="true" />
     <div v-if="kanji" class="card">
         <Card :kanji="kanji"  />
         <a :href="getURlKanji()" >Détails</a>
@@ -26,7 +26,7 @@ export default {
         return {
             kanji: [],
             trad: "",
-            textModal: "En cliquant sur ce bouton, vous avez accès à une explication sur le but et sur comment utiliser chaque page, n'hésitez pas si vous ne comprenez pas quelque chose !",
+            textModal: "En cliquant sur ce bouton, vous avez accès à une explication sur le but de chaque page et de comment s'en servir, n'hésitez pas si vous ne comprenez pas quelque chose !",
 
         }
     },

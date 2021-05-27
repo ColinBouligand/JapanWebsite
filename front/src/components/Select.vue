@@ -24,11 +24,15 @@ export default {
     },
     data() {
         return {
+          selected : "",
         }
     },
     methods: {    
         change(event){
             this.$emit('select-change', event.target.value)
+        },
+        emitData(data){
+          this.$emit('select-change', data)
         }
     },
     computed: {
@@ -38,6 +42,7 @@ export default {
         
 },
 async mounted() {
+  console.log(this.content)
     var x, i, j, l, ll, selElmnt, a, b, c;
 /*look for any elements with the class "custom-select":*/
 x = document.getElementsByClassName("custom-select");
@@ -85,13 +90,18 @@ for (i = 0; i < l; i++) {
     b.appendChild(c);
   }
   x[i].appendChild(b);
-  a.addEventListener("click", function(e) {
+  a.addEventListener("click", (e) =>{
       /*when the select box is clicked, close any other select boxes,
       and open/close the current select box:*/
       e.stopPropagation();
       closeAllSelect(this);
-      this.nextSibling.classList.toggle("select-hide");
-      this.classList.toggle("select-arrow-active");
+      if(this.selected.length != 0 && (a.lastChild.data != this.selected)) // si rien n'a encore été sélectionné ou que l'on clique sur le même élement que celui déjà sélectionné
+      {
+            this.emitData(a.lastChild.data) //alors on notifie le parent
+      }
+      this.selected = a.lastChild.data
+      a.nextSibling.classList.toggle("select-hide");
+      a.classList.toggle("select-arrow-active");
     });
 }
 function closeAllSelect(elmnt) {
@@ -131,7 +141,6 @@ document.addEventListener("click", closeAllSelect);
 /*the container must be positioned relative:*/
 .custom-select {
   position: relative;
-  left: 45%;
   font-family: Lato;
 }
 
@@ -181,6 +190,8 @@ document.addEventListener("click", closeAllSelect);
   left: 0;
   right: 0;
   z-index: 99;
+  overflow: auto;
+  height: 200px;
 }
 
 /*hide the items when the select box is closed:*/

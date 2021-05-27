@@ -36,4 +36,8 @@ export default{
   font-weight: bold;
 
 }
+
+.btn:hover {
+  color: linear-gradient(to top, rgb(235,210,205), rgb(250,240,205), rgb(235,210,205));
+  }
 </style>

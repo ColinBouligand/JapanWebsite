@@ -1,14 +1,20 @@
 <template>
 <Help :textModal="textModal" />
 <div  v-if="!noPhotos">
-<Select v-model="selectedFamily" :content="families" @select-change="selectChange"/>
-    <a :href="getURlKanji()" >Détails</a>
-    <Button @click="changeKanji();" text="Prochain Kanji" color="#F5F5F5"/>
+    <div class="select">
+ <h2>Niveau de difficulté : </h2> <Select v-model="selectedFamily" :content="families" @select-change="selectChange"/>
+    </div>
     <div  class="container">
     <h1 id="kanjiImage">{{kanjiToFind}}</h1>
+    <a :href="getURlKanji()" >Détails</a>
+    <div class="containerpictures">
     <img v-if="images[0]" :src="images[0]"  @click="clickImg" data-id="1" :data="kanji[0]"  :alt="meanings[0].meanings[0]" :title="meanings[0].meanings[0]" >
     <img v-if="images[1]" :src="images[1]"  @click="clickImg" data-id="2" :data="kanji[1]" :alt="meanings[1].meanings[0]" :title="meanings[1].meanings[0]" >
     <img v-if="images[2]" :src="images[2]" @click="clickImg" data-id="3" :data="kanji[2]" :alt="meanings[2].meanings[0]" :title="meanings[2].meanings[0]" >
+       </div>
+        <Button @click="changeKanji();" text="Prochain Kanji" color="#F5F5F5"/>
+
+    
     </div>
 </div>
 <div v-if="noPhotos" class="container">
@@ -164,6 +170,13 @@ export default {
 <style scoped>
 
 
+.select {
+    display :flex;
+    width: 25%;
+    justify-content: space-around;
+}
+
+
 .container {
    width:80%;
    margin-left:10%;
@@ -172,14 +185,14 @@ export default {
 
 Button {
     color:black;
-    margin-left:45%;
     margin-top: 4%;
 }
 
 a {
     color: white;
-    margin-left: 1%;
-    margin-top: 1%;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 25px;
 
 }
 
@@ -209,11 +222,13 @@ a {
 .toast-leave-active {
     transition: all 0.3s ease;
 }
+
  Select {
       position: relative;
       margin-left: 46%;
       width:3%;
       min-width:40px;
+
 
     }
     img {
@@ -237,5 +252,13 @@ a {
         z-index: 1000;
         border-radius: 5px ;
         background: rgba(0,0,0,0.5);
+}
+
+h1 {
+    font-size: 700%;
+}
+
+p {
+    font-weight: bold;
 }
 </style>

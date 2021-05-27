@@ -1,13 +1,18 @@
 <template>
 
 <Help :textModal="textModal" />
-<Button @click="changeTraining()" :text="training ? 'Dessin':'Entrainement'" color="black" textColor="white" />
-<Select v-if="training && kanjisSelect" :content="kanjisSelect" @select-change="selectChange"/>
+
+     <Button @click="changeTraining()" :text="training ? 'Dessin':'Entrainement'" color="black" textColor="white" />
+
+
 <div class="container_all">
 <div id="canvas-container">
-  
+       <div class="select" v-if="training && kanjisSelect"><h2> Kanji: </h2> <Select  :content="kanjisSelect" @select-change="selectChange" /></div>
+
     <Canvas :training="training" @get-kanji="getKanji" :kanji="kanji"/>
+
 </div>
+
 
 <KanjiList v-if="kanjisAnswer && !training" :kanjis="kanjisAnswer"/>
 </div>
@@ -44,7 +49,7 @@ export default {
         kanjisSelect: [],
         training: false,
         kanji: "",
-        textModal: "Cette page est dédiée au tracé des kanji. Elle est composée de 2 parties. La première vous permet de dessiner un kanji que vous ne connaissez pas et d'accéder à ses informations. La deuxième partie, accessible via le bouton 'entrainement' vous permet de vous entrainer au tracé des kanji en choisissant un modèle.",
+        textModal: "Cette page est dédiée au tracé des kanji et des hiragana. Elle est composée de 2 parties. La première vous permet de dessiner un hiragana que vous ne connaissez pas et d'accéder à ses informations. La deuxième partie, accessible via le bouton 'entrainement' vous permet de vous entrainer au tracé des kanji en choisissant un modèle.",
         kanjisAnswer : []
 
         }
@@ -99,6 +104,13 @@ export default {
 
 <style scoped>
 
+
+.select {
+    display :flex;
+    width: 45%;
+    justify-content: space-around;
+}
+
 * {
      font-weight: bold;
 }
@@ -117,16 +129,10 @@ export default {
       align-items:center;
       min-width:150px;
       min-height:100px;
-      margin-top:5%;
+      margin-top:3%;
 
     }
-    Select {
-      position: relative;
-      margin-left: 9%;
-      width:3%;
-      min-width:40px;
 
-    }
 
     Button {
       min-width: 130px;

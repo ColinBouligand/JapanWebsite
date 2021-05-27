@@ -41,7 +41,10 @@ export default {
 
 nav {
     background-color: rgb(34,34,34); 
-    height: 65px;
+    min-height: 65px;
+    display:flex;
+    flex-wrap: wrap;
+    height:auto;
 }
 img {
     width: 65px;

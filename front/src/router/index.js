@@ -5,6 +5,7 @@ import Home from '../views/Home'
 import Drawing from '../views/Drawing'
 import About from '../views/About'
 import Kanji from '../views/Kanji'
+import Hiragana from '../views/Hiragana'
 import Pictures from '../views/Pictures'
 import Search from '../views/Search'
 import NotFoundComponent from '../views/NotFoundComponent'
@@ -69,6 +70,14 @@ const routes = [
         component: Kanji,
         meta : {
             title: 'Fiche Kanji'
+        }
+    },
+    {
+        path: '/hiragana/:hiragana',
+        name: 'Hiragana',
+        component: Hiragana,
+        meta : {
+            title: 'Fiche Hiragana'
         }
     },
     {

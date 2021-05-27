@@ -20,7 +20,7 @@ export default {
     methods : {
         goToKanjiPage(event){
             console.log(event)
-            window.location.href= `${window.location.origin}/kanji/${event.target.innerText}`
+            window.location.href= `${window.location.origin}/hiragana/${event.target.innerText}`
     },
     }
 

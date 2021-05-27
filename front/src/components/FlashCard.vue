@@ -103,6 +103,9 @@ export default {
     color: #FAF0CD!important;
 }
 
+div {
+    word-wrap: break-word;
+}
   /*animation : clickedOn 1s*/
 /*
 @keyframes clickedOn {
