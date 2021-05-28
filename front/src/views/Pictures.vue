@@ -145,12 +145,14 @@ export default {
 
     },
     clickImg(img){
-        console.log(img.explicitOriginalTarget.getAttribute("alt"))
+
+        // PROBLEME CROSS WEB BROWSER RESOLU AVEC  explicitOriginalTarget -> target
+        console.log(img.target.getAttribute("alt"))
         console.log(document.getElementById("kanjiImage").innerHTML)
-        if(img.explicitOriginalTarget.getAttribute("data") === document.getElementById("kanjiImage").innerHTML)
+        if(img.target.getAttribute("data") === document.getElementById("kanjiImage").innerHTML)
         {   
             console.log("gagné")
-            var id = img.explicitOriginalTarget.getAttribute("data-id")
+            var id = img.target.getAttribute("data-id")
             this.triggerToast("Gagné ! - "+ this.meanings[id-1].meanings[0]+" -")
             this.changeKanji()
         }

@@ -26,7 +26,7 @@ export default {
         return {
             kanji: [],
             trad: "",
-            textModal: "En cliquant sur ce bouton, vous avez accès à une explication sur le but de chaque page et de comment s'en servir, n'hésitez pas si vous ne comprenez pas quelque chose !",
+            textModal: "Ce bouton est présent sur chaque page de ce site, il est là pour vous expliquer le fonctionnement et le but de chacune d'elles !",
 
         }
     },

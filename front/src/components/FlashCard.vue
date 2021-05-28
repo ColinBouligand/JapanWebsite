@@ -34,36 +34,7 @@ export default {
                 this.$emit('turn-card', e.target.getAttribute("data-kanji"),e.target.getAttribute("data-num"))
                 this.clicked =!this.clicked
                 this.correct = !this.correct
-            //envoie le kanji et la colonne du kanji sélectionné
-            // PROBLEME EN FONCTION DES NAVIGATEURS
-            //recup le navigateur de l'utilisateur
-            //var browser;
-
-           /* var isFirefox = typeof InstallTrigger !== 'undefined';
-
-            console.log("Firefox", isFirefox)
-
-            var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-
-            console.log("chrome", isChrome)*/
-
-            //var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-
-            //console.log("opera", isOpera)  
-           /* else 
-            {
-               console.log("event", e.srcElement) //pour opera et chrome
-                console.log(e.srcElement.data)
-                
-               // this.$emit('turn-card', e.explicitOriginalTarget.dataset.kanji,e.explicitOriginalTarget.dataset.num)
-                
-            }*/
-            
-            //console.log(navigator.userAgent)
-            //var agent = navigator.userAgent.match(/(opera|chrome|safari|firefox|msie)/?s*(.?d+(.d+)*)/i)
-            //var event=e||window.event;
-
-            
+                  
         }
     },
     created() {

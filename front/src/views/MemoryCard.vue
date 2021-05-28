@@ -39,7 +39,7 @@ export default {
             kanji: [],
             trad: "",
             showToast: false,
-            textModal: "Cette page est là pour vous aider à retenir les kanji. Elle vous permet de vous tester vous même sur votre connaissance de ces symboles. Vous pouvez ensuite vérifier votre réponse en passant le curseur sur la carte, ayant ainsi accès aux traductions anglaises (au verso) et française (venant d'en bas). Vous pouvez ensuite, soit passez à un autre kanji, soit accéder à la page du kanji via le lien 'détail'.",
+            textModal: "Cette page est là pour vous aider à retenir les kanji. Elle vous permet de tester votre connaissance de ces symboles. Vous pouvez ensuite vérifier votre réponse en passant le curseur sur la carte, ayant ainsi accès aux traductions anglaises (au verso) et française (venant d'en bas). Vous pouvez ensuite, soit passer à un autre kanji, soit accéder à la page du kanji via le lien 'détail'.",
             selectedFamily:"1",
         }
     },
